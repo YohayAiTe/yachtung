@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <style>
+            html, body {
+                margin: 0;
+                width: 100%;
+                height: 100%;
+                overflow: hidden;
+                background-color: black;
+            }
+
+            body {
+                display: flex;
+            }
+
+            #scores-div {
+                display: flex;
+                flex-direction: column;
+            }
+
+            #scores-container {
+                padding-top: 40px;
+                width: 100%;
+                box-sizing: border-box;
+
+                display: flex;
+                flex-direction: column;
+            }
+
+            .player-container {
+                display: flex;
+                justify-content: space-between;
+                font: 40px sans-serif;
+                color: white;
+                width: 100%;
+                padding: 10px 40px;
+                box-sizing: border-box;
+            }
+        </style>
+    </head>
+
+    <body>
+        <canvas id="game-canvas"></canvas>
+        <div id="scores-container"></div>
+    </body>
+
+    <script src="./powerup.js"></script>
+    <script src="./config.js"></script>
+    <script src="./game.js"></script>
+    <script src="./player.js"></script>
+    <script src="./obstacle.js"></script>
+    <script src="./scoreboard.js"></script>
+    <script src="./button.js"></script>
+
+    <script>
+        /** @type {HTMLCanvasElement}*/
+        const canvas = document.querySelector("#game-canvas")
+        const scores = document.querySelector("#scores-container")
+        const ctx = canvas.getContext("2d")
+        resizeHandler()
+
+        function resizeHandler() {
+            // TODO: bug when the window is very narrow
+            const scoresWidth = Math.round(window.innerWidth / 5)
+            const canvasWidth = window.innerWidth - scoresWidth
+            canvas.width = canvas.height = Math.min(canvasWidth, window.innerHeight)
+            scores.width = window.innerWidth - canvas.width
+            ctx.setTransform(canvas.width, 0, 0, canvas.height, 0, 0)
+        }
+        window.addEventListener("resize", resizeHandler)
+
+        const scoreboard = new Scoreboard(document.querySelector("#scores-container"))
+
+        /** @type {Game} */
+        const game = new Game(ctx, scoreboard)
+        window.addEventListener("keydown", event => game.keyHandler(event))
+        window.addEventListener("keyup", event => game.keyHandler(event))
+        // window.addEventListener("mousedown", event => game.mouseHandler(event))
+        window.addEventListener("mouseup", event => game.mouseHandler(event))
+        window.addEventListener("resize", () => game.resizeHandler())
+
+        function requestRepaint() {
+            game.render()
+            window.requestAnimationFrame(requestRepaint)
+        }
+        requestRepaint()
+    </script>
+</html>
