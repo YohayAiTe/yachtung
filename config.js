@@ -25,7 +25,7 @@ const Config = Object.freeze({
 
         start: {
             generationRange: 0.8,
-            invincibility: second,
+            invincibility: second, // TODO: extend invincibility
             preUpdates: 0.25*UPS,
         },
         
@@ -34,7 +34,7 @@ const Config = Object.freeze({
 
         powerups: {
             /** @type {{powerupType: Function, weight: number}[]} */
-            weights: [
+            weights: [ // TODO: rework weights
                 {powerupType: SelfSpeedBoost, weight: 0.5},
                 {powerupType: OtherSpeedBoost, weight: 0.5},
                 {powerupType: SelfSpeedDeboost, weight: 0.5},
@@ -57,6 +57,8 @@ const Config = Object.freeze({
                 phase: 15*second,
             },
             width: 0.015,
+
+            // TODO: add spawn range (no powerups in the walls)
 
             speedPowerupDuration: 3*second,
             widthPowerupDuration: 3*second,
@@ -82,7 +84,7 @@ const Config = Object.freeze({
             {name: "Rudolph", colour: "red"},
             {name: "Rosemary", colour: "green"},
             {name: "Bluey", colour: "blue"},
-            {name: "Xi", colour: "yellow"},
+            {name: "Xi", colour: "yellow"},  // TODO: make gradient
             {name: "Coral", colour: "magenta"},
             {name: "Ocean", colour: "cyan"},
             {name: "Pinky", colour: "pink"},

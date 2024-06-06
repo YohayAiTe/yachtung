@@ -1,3 +1,5 @@
+// TODO: remove gaps (part of adding size powerup)
+
 class Obstacle {
     /** @type {[number, number][]} */
     #points = []
