@@ -7,8 +7,8 @@ class Scoreboard {
         this.container = container
     }
 
-    hideScoreboard() { this.container.hidden = true }
-    showScoreboard() { this.container.hidden = false }
+    hideScoreboard() { this.container.style.display = "none" }
+    showScoreboard() { this.container.style.display = "block" }
 
     /**
      * 
