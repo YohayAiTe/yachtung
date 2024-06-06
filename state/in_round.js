@@ -16,8 +16,6 @@ class InRound extends State {
     constructor(game) {
         super(game)
 
-        this.game.obstacles = []
-
         this.interval = setInterval(() => this.mainloop(game), 1000/UPS)
         this.trailTicks = 0
 
@@ -98,7 +96,7 @@ class InRound extends State {
                     this.#startTrailForPlayer(player)
                 }
             }
-            if (player.invincibilityCount === 0) {
+            if (player.invincibilityTicks <= 0) {
                 for (const obstacle of this.game.obstacles) {
                     if (obstacle.doesPlayerCollide(player)) {
                         player.isAlive = false

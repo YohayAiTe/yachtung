@@ -8,7 +8,6 @@ const Config = Object.freeze({
     continueGameKey: "Enter",
 
     gameplay: {
-        UPS: 60,
         trailOnTicks: 80,
         trailOffTicks: 20,
 
@@ -22,6 +21,12 @@ const Config = Object.freeze({
             angularVelocity: Math.PI*2/360*1.35,
             width: 0.0075,
             obstacleFraction: 0.65,
+        },
+
+        start: {
+            generationRange: 0.8,
+            invincibility: second,
+            preUpdates: 0.25*UPS,
         },
 
         powerups: {
@@ -40,7 +45,7 @@ const Config = Object.freeze({
                 {powerupType: BorderPowerup, weight: 1},
                 {powerupType: InvincibilityPowerup, weight: 1},
                 {powerupType: KeyChangePowerup, weight: 1},
-                {powerupType: ClearBoardPowerup, weight: 1},
+                {powerupType: ClearBoardPowerup, weight: 0.5},
             ],
             function: {
                 minExpectedTime: 0.5*second,
@@ -50,11 +55,11 @@ const Config = Object.freeze({
             },
             width: 0.015,
 
-            speedPowerupDuration: 60*3,
-            widthPowerupDuration: 60*3,
-            borderPowerupDuration: 60*6,
-            invincibilityPowerupDuration: 60*3,
-            keyChangePowerupDuration: 60*6,
+            speedPowerupDuration: 3*second,
+            widthPowerupDuration: 3*second,
+            borderPowerupDuration: 6*second,
+            invincibilityPowerupDuration: 3*second,
+            keyChangePowerupDuration: 6*second,
         }
     },
 

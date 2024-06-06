@@ -84,7 +84,7 @@ class Game {
             this.ctx.beginPath()
             this.ctx.arc(player.position[0], player.position[1], player.width, 0, 2*Math.PI, true)
             this.ctx.closePath()
-            if (player.invincibilityCount > 0) {
+            if (player.invincibilityTicks > 0) {
                 this.ctx.arc(player.position[0], player.position[1], player.width / 2, 0, 2*Math.PI, false)
                 this.ctx.closePath()
             }

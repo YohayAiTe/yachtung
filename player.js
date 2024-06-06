@@ -41,7 +41,7 @@ class Player {
         this.currentObstacle = null
 
         /** @type {number} */
-        this.invincibilityCount = 0
+        this.invincibilityTicks = 0
 
         /** @type {number} */
         this.keyDirections = 1
@@ -59,6 +59,8 @@ class Player {
         this.currentAngle += angleChange
         this.position[0] += this.velocity*Math.cos(this.currentAngle)
         this.position[1] += this.velocity*Math.sin(this.currentAngle)
+
+        if (this.invincibilityTicks > 0) this.invincibilityTicks--
     }
 }
 

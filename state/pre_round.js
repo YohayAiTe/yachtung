@@ -15,9 +15,15 @@ class PreRound extends State {
         this.countdown = 3+1
         this.reduceCountdown()
 
+        const startConfig = Config.gameplay.start
+
+        this.game.obstacles = []
+
         for (const player of this.game.players) {
             player.isAlive = true
-            player.position = [Math.random()*0.8+0.1, Math.random()*0.8+0.1]
+            const startRange = startConfig.generationRange
+            const startOffset = (1-startRange) / 2
+            player.position = [Math.random()*startRange + startOffset, Math.random()*startRange + startOffset]
             player.currentAngle = Math.random()*2*Math.PI
 
             player.velocity = Config.gameplay.player.velocity
@@ -29,10 +35,15 @@ class PreRound extends State {
 
         this.game.borderUnactiveCount = 0
         for (const player of this.game.players) {
-            player.invincibilityCount = 0
+            player.invincibilityTicks = startConfig.invincibility + startConfig.preUpdates
             player.keyDirections = 1
             player.isLeftPressed = false
             player.isRightPressed = false
+
+            player.currentObstacle = new Obstacle(Config.gameplay.player.obstacleFraction * player.width, player)
+            this.game.obstacles.push(player.currentObstacle)
+            for (let i = 0; i < startConfig.preUpdates; i++) player.move()
+            player.currentObstacle.activatePoints()
         }
     }
 
@@ -50,6 +61,7 @@ class PreRound extends State {
 
     render() {
         this.game.renderBorder(1)
+        this.game.renderObstacles()
         this.game.renderPlayers()
 
         this.ctx.font = Config.text.font.huge
