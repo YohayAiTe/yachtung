@@ -28,6 +28,9 @@ const Config = Object.freeze({
             invincibility: second,
             preUpdates: 0.25*UPS,
         },
+        
+        endGameFactor: 5,
+        // TODO: enable tie-breaker
 
         powerups: {
             /** @type {{powerupType: Function, weight: number}[]} */

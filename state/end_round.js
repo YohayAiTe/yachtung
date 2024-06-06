@@ -15,7 +15,7 @@ class EndRound extends State {
             if (player.score > topScore) topScore = player.score
         }
 
-        if ((this.game.players.length-1)*5 <= topScore) return new EndScreen(game)
+        if ((this.game.players.length-1)*Config.gameplay.endGameFactor <= topScore) return new EndScreen(game)
     }
 
     /** @type {KeyHandler} */
@@ -27,6 +27,7 @@ class EndRound extends State {
     mouseHandler() {}
 
     render() {
+        // TODO: render powerups from previous round
         this.game.renderBorder(1)
         this.game.renderObstacles()
         this.game.renderPlayers()

@@ -7,7 +7,6 @@ class Player {
         this.name = name
         this.colour = colour
         
-        // TODO: deal with key names and key codes
         /** @type {string|null} */
         this.leftKey = null
         /** @type {string|null} */
