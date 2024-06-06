@@ -31,6 +31,8 @@ class PreRound extends State {
         for (const player of this.game.players) {
             player.invincibilityCount = 0
             player.keyDirections = 1
+            player.isLeftPressed = false
+            player.isRightPressed = false
         }
     }
 

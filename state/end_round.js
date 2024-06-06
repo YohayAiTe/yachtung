@@ -22,12 +22,6 @@ class EndRound extends State {
     /** @type {KeyHandler} */
     keyHandler(event) {
         if (event.code === Config.continueGameKey && event.type === "keyup") this.game.setState(PreRound)
-
-        const isPress = event.type === "keydown"
-        for (const player of this.game.players) {
-            if (event.code == player.leftKey) player.isLeftPressed = isPress
-            if (event.code == player.rightKey) player.isRightPressed = isPress
-        }
     }
 
     /** @type {MouseHandler} */
