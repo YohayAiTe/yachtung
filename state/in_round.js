@@ -18,10 +18,20 @@ class InRound extends State {
 
         this.game.obstacles = []
 
-        this.interval = setInterval(() => this.mainloop(game), 1000/Config.gameplay.UPS)
+        this.interval = setInterval(() => this.mainloop(game), 1000/UPS)
         this.trailTicks = 0
 
-        this.#powerupManager = new PowerupManager(this.game, (t) => 5.5*60*(Math.cos(2*Math.PI*t/(60*60*2)) + 1) + 30)
+        this.#powerupManager = new PowerupManager(this.game, this.#powerupFunction)
+    }
+
+    /**
+     * 
+     * @param {number} t 
+     */
+    #powerupFunction(t) {
+        const funcConfig = Config.gameplay.powerups.function
+        const baseValue = (Math.cos(2*Math.PI*(t/funcConfig.period + funcConfig.phase))+1)/2
+        return baseValue * (funcConfig.maxExpectedTime-funcConfig.minExpectedTime) + funcConfig.minExpectedTime
     }
 
     /** @type {KeyHandler} */

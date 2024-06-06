@@ -1,3 +1,9 @@
+const UPS = 60
+const second = UPS
+const minute = 60*second
+const hour = 60*minute
+
+
 const Config = Object.freeze({
     continueGameKey: "Enter",
 
@@ -36,6 +42,12 @@ const Config = Object.freeze({
                 {powerupType: KeyChangePowerup, weight: 1},
                 {powerupType: ClearBoardPowerup, weight: 1},
             ],
+            function: {
+                minExpectedTime: 0.5*second,
+                maxExpectedTime: 6*second,
+                period: 2*minute,
+                phase: 15*second,
+            },
             width: 0.015,
 
             speedPowerupDuration: 60*3,
