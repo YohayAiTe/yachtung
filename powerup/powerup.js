@@ -159,3 +159,4 @@ class PowerupManager {
 //  - Change angular velocity
 //  - Random walls
 //  - Player swap
+//  - No obstacles
