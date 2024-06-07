@@ -5,6 +5,7 @@
  */
 class InRound extends State {
     
+    // TODO: make intervals random and per player
     /** @type {number|null} */
     interval = null
     /** @type {number} */

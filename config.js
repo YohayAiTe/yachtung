@@ -4,6 +4,7 @@ const minute = 60*second
 const hour = 60*minute
 
 
+// TODO: make constants use UPS
 const Config = Object.freeze({
     continueGameKey: "Enter",
 
