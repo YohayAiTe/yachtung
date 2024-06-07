@@ -66,6 +66,9 @@ const Config = Object.freeze({
             borderPowerupDuration: 6*second,
             invincibilityPowerupDuration: 3*second,
             keyChangePowerupDuration: 6*second,
+
+            maxInvincibilityHoleTicks: 1*second,
+            maxInvincibilityHoleFraction: 0.5,
         }
     },
 

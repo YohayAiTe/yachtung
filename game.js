@@ -84,8 +84,13 @@ class Game {
             this.ctx.beginPath()
             this.ctx.arc(player.position[0], player.position[1], player.width, 0, 2*Math.PI, true)
             this.ctx.closePath()
+            
             if (player.invincibilityTicks > 0) {
-                this.ctx.arc(player.position[0], player.position[1], player.width / 2, 0, 2*Math.PI, false)
+                const invincibilityHoleTicks = Math.min(player.invincibilityTicks, Config.gameplay.powerups.maxInvincibilityHoleTicks)
+                const invincibilityHoleFraction = invincibilityHoleTicks / Config.gameplay.powerups.maxInvincibilityHoleTicks * 
+                    Config.gameplay.powerups.maxInvincibilityHoleFraction
+            
+                this.ctx.arc(player.position[0], player.position[1], player.width * invincibilityHoleFraction, 0, 2*Math.PI, false)
                 this.ctx.closePath()
             }
             this.ctx.fill()

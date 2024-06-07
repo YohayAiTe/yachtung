@@ -1,4 +1,3 @@
-// TODO: add indicator to the time
 // TODO: add time rather than set it
 
 /** @extends {Powerup} */
