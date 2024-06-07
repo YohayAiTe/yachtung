@@ -6,6 +6,7 @@ class Game {
     constructor(ctx, scoreboard) {
         this.ctx = ctx
         this.scoreboard = scoreboard
+        this.powerupManager = new PowerupManager(this, this.#powerupFunction)
 
         /** @type {Player[]} */
         this.players = []
@@ -27,6 +28,16 @@ class Game {
 
         /** @type {number} */
         this.borderUnactiveCount = 0
+    }
+
+    /**
+     * 
+     * @param {number} t 
+     */
+    #powerupFunction(t) {
+        const funcConfig = Config.gameplay.powerups.function
+        const baseValue = (Math.cos(2*Math.PI*(t/funcConfig.period + funcConfig.phase))+1)/2
+        return baseValue * (funcConfig.maxExpectedTime-funcConfig.minExpectedTime) + funcConfig.minExpectedTime
     }
 
     /**

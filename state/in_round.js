@@ -11,26 +11,11 @@ class InRound extends State {
     /** @type {number} */
     trailTicks = 0
 
-    /** @type {PowerupManager} */
-    #powerupManager
-
     constructor(game) {
         super(game)
 
         this.interval = setInterval(() => this.mainloop(game), 1000/UPS)
         this.trailTicks = 0
-
-        this.#powerupManager = new PowerupManager(this.game, this.#powerupFunction)
-    }
-
-    /**
-     * 
-     * @param {number} t 
-     */
-    #powerupFunction(t) {
-        const funcConfig = Config.gameplay.powerups.function
-        const baseValue = (Math.cos(2*Math.PI*(t/funcConfig.period + funcConfig.phase))+1)/2
-        return baseValue * (funcConfig.maxExpectedTime-funcConfig.minExpectedTime) + funcConfig.minExpectedTime
     }
 
     /** @type {KeyHandler} */
@@ -50,7 +35,7 @@ class InRound extends State {
         this.game.renderBorder(this.game.borderUnactiveCount === 0 ? 1 : 0)
         this.game.renderObstacles()
         this.game.renderPlayers()
-        this.#powerupManager.render()
+        this.game.powerupManager.render()
     }
 
     mainloop() {
@@ -118,7 +103,7 @@ class InRound extends State {
             this.game.setState(EndRound)
         }
 
-        this.#powerupManager.update()
+        this.game.powerupManager.update()
     }
 
     /** @param {Player} player */

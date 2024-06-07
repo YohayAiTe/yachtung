@@ -27,10 +27,10 @@ class EndRound extends State {
     mouseHandler() {}
 
     render() {
-        // TODO: render powerups from previous round
         this.game.renderBorder(1)
         this.game.renderObstacles()
         this.game.renderPlayers()
+        this.game.powerupManager.render()
 
         this.ctx.textAlign = "center"
         this.ctx.textBaseline = "middle"

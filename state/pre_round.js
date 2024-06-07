@@ -18,6 +18,7 @@ class PreRound extends State {
         const startConfig = Config.gameplay.start
 
         this.game.obstacles = []
+        this.game.powerupManager.cleanEffects()
 
         for (const player of this.game.players) {
             player.isAlive = true
