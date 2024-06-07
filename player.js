@@ -2,10 +2,12 @@ class Player {
     /**
      * @param {string} name 
      * @param {string} colour
+     * @param {string} invertedColour 
      */
-    constructor(name, colour) {
+    constructor(name, colour, invertedColour) {
         this.name = name
         this.colour = colour
+        this.invertedColour = invertedColour
         
         /** @type {string|null} */
         this.leftKey = null

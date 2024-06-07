@@ -80,18 +80,58 @@ const Config = Object.freeze({
     },
     
     defaultPlayers: {
-        /** @type {{name: string, colour: string}[]} */
+        /** @type {{name: string, colour: string, invertedColour: string}[]} */
         settings: [
-            {name: "Rudolph", colour: "red"},
-            {name: "Rosemary", colour: "green"},
-            {name: "Bluey", colour: "blue"},
-            {name: "Xi", colour: "yellow"},  // TODO: make gradient
-            {name: "Coral", colour: "magenta"},
-            {name: "Ocean", colour: "cyan"},
-            {name: "Pinky", colour: "pink"},
-            {name: "Yoda", colour: "lightgreen"},
-            {name: "Usnavi", colour: "navy"},
-            {name: "Salmonella", colour: "salmon"},
+            {
+                name: "Rudolph", 
+                colour: "hsl(0, 100%, 50%)", 
+                invertedColour: "hsl(60, 40%, 50%)"
+            },
+            {
+                name: "Rosemary", 
+                colour: "hsl(120, 100%, 25.1%)", 
+                invertedColour: "hsl(200, 40%, 40%)"
+            },
+            {
+                name: "Bluey", 
+                colour: "hsl(240, 100%, 50%)", 
+                invertedColour: "hsl(300, 35%, 50%)"
+            },
+            {
+                name: "Xi", 
+                colour: "hsl(60, 100%, 50%)", 
+                invertedColour: "hsl(160, 45%, 50%)"
+            },  // TODO: make gradient
+            {
+                name: "Coral", 
+                colour: "hsl(300, 100%, 50%)", 
+                invertedColour: "hsl(30, 80%, 50%)"
+            },
+            {
+                name: "Ocean", 
+                colour: "hsl(180, 100%, 50%)", 
+                invertedColour: "hsl(270, 50%, 50%)"
+            },
+            {
+                name: "Pinky", 
+                colour: "hsl(327.57, 100%, 53.92%)", 
+                invertedColour: "hsl(87.57, 50%, 53.92%)"
+            },
+            {
+                name: "Yoda", 
+                colour: "hsl(120, 100%, 74.9%)", 
+                invertedColour: "hsl(180, 50%, 54.9%)"
+            },
+            {
+                name: "Usnavi", 
+                colour: "hsl(240, 100%, 25.1%)", 
+                invertedColour: "hsl(0, 60%, 50%)"
+            },
+            {
+                name: "Salmonella", 
+                colour: "hsl(6.18, 100%, 71.37%)", 
+                invertedColour: "hsl(96.18, 70%, 65%)"
+            },
         ],
         /** @type {{left: string, right: string}[]} */
         keys: [

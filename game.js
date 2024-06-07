@@ -12,7 +12,7 @@ class Game {
         for (let i = 0; i < Config.defaultPlayers.keys.length; i++) {
             const settings = Config.defaultPlayers.settings[i];
             const keys = Config.defaultPlayers.keys[i];
-            const player = new Player(settings.name, settings.colour)
+            const player = new Player(settings.name, settings.colour, settings.invertedColour)
             player.leftKey = keys.left
             player.rightKey = keys.right
             this.players.push(player)
@@ -80,7 +80,7 @@ class Game {
 
     renderPlayers() {
         for (const player of this.players) {
-            this.ctx.fillStyle = player.colour
+            this.ctx.fillStyle = player.keyDirections === 1 ? player.colour : player.invertedColour
             this.ctx.beginPath()
             this.ctx.arc(player.position[0], player.position[1], player.width, 0, 2*Math.PI, true)
             this.ctx.closePath()

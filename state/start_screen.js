@@ -119,7 +119,7 @@ class StartScreen extends State {
             }
         }
 
-        const newPlayer = new Player(playerSettings[idx].name, playerSettings[idx].colour)
+        const newPlayer = new Player(playerSettings[idx].name, playerSettings[idx].colour, playerSettings[idx].invertedColour)
         this.game.players.push(newPlayer)
         this.queuedPresses.push({player: newPlayer, key: "left"}, {player: newPlayer, key: "right"})
         this.#showFirstQueuedPress()
