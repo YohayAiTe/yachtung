@@ -15,6 +15,9 @@ const Config = Object.freeze({
         border: {
             width: 0.005,
             colour: "yellow",
+            inactiveColour: "blue",
+            inactiveFlashPeriod: 1*second,
+            endInactiveIndicatorStart: 2*second,
         },
 
         player: {

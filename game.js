@@ -27,7 +27,7 @@ class Game {
         this.setState(StartScreen)
 
         /** @type {number} */
-        this.borderUnactiveCount = 0
+        this.borderInactiveTicks = 0
     }
 
     /**
@@ -71,21 +71,48 @@ class Game {
         this.state.render()
     }
 
-    /**
-     * 
-     * @param {number} opacity 
-     */
-    renderBorder(opacity) {
+    renderBorder() {
         const borderConfig = Config.gameplay.border
         const w = borderConfig.width
 
+        if (this.borderInactiveTicks === 0) {
+            this.ctx.fillStyle = borderConfig.colour
+            this.ctx.fillRect(0, 0, 1, w)
+            this.ctx.fillRect(0, 1-w, 1, w)
+            this.ctx.fillRect(0, w, w, 1-2*w)
+            this.ctx.fillRect(1-w, w, w, 1-2*w)
+            return
+        }
         const prevOpacity = this.ctx.globalAlpha
+        this.ctx.globalAlpha = (1+Math.cos(2*Math.PI*this.borderInactiveTicks/Config.gameplay.border.inactiveFlashPeriod)) / 2
+
+        const endInactiveIndicatorTicks = Math.min(borderConfig.endInactiveIndicatorStart, this.borderInactiveTicks)
+        const f = endInactiveIndicatorTicks / borderConfig.endInactiveIndicatorStart
+
         this.ctx.fillStyle = borderConfig.colour
-        this.ctx.globalAlpha = opacity
-        this.ctx.fillRect(0, 0, 1, w)
-        this.ctx.fillRect(0, 1-w, 1, w)
-        this.ctx.fillRect(0, w, w, 1-2*w)
-        this.ctx.fillRect(1-w, w, w, 1-2*w)
+        this.ctx.beginPath()
+        this.ctx.moveTo(0, 0)
+        this.ctx.lineTo(1, 0)
+        this.ctx.lineTo(1, 1)
+        this.ctx.lineTo(0, 1)
+        this.ctx.moveTo(w*(1-f), w*(1-f))
+        this.ctx.lineTo(w*(1-f), 1 - w*(1-f))
+        this.ctx.lineTo(1 - w*(1-f), 1 - w*(1-f))
+        this.ctx.lineTo(1 - w*(1-f), w*(1-f))
+        this.ctx.fill()
+
+        this.ctx.fillStyle = borderConfig.inactiveColour
+        this.ctx.beginPath()
+        this.ctx.moveTo(w*(1-f), w*(1-f))
+        this.ctx.lineTo(1 - w*(1-f), w*(1-f))
+        this.ctx.lineTo(1 - w*(1-f), 1 - w*(1-f))
+        this.ctx.lineTo(w*(1-f), 1 - w*(1-f))
+        this.ctx.moveTo(w, w)
+        this.ctx.lineTo(w, 1 - w)
+        this.ctx.lineTo(1 - w, 1 - w)
+        this.ctx.lineTo(1 - w, w)
+        this.ctx.fill()
+        
         this.ctx.globalAlpha = prevOpacity
     }
 

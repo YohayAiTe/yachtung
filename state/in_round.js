@@ -32,7 +32,7 @@ class InRound extends State {
 
     render() {
         // TODO: make border flash
-        this.game.renderBorder(this.game.borderUnactiveCount === 0 ? 1 : 0)
+        this.game.renderBorder()
         this.game.renderObstacles()
         this.game.renderPlayers()
         this.game.powerupManager.render()
@@ -54,7 +54,7 @@ class InRound extends State {
         let justDied = 0
         for (const player of this.game.players) {
             if (!player.isAlive) continue
-            if (this.game.borderUnactiveCount === 0) {
+            if (this.game.borderInactiveTicks === 0) {
                 if ((player.position[0] < player.width+borderWidth) || 
                     (1-player.position[0] < player.width+borderWidth) || 
                     (player.position[1] < player.width+borderWidth) || 
@@ -104,6 +104,7 @@ class InRound extends State {
         }
 
         this.game.powerupManager.update()
+        if (this.game.borderInactiveTicks > 0) this.game.borderInactiveTicks--
     }
 
     /** @param {Player} player */

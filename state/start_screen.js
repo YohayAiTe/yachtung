@@ -13,6 +13,7 @@ class StartScreen extends State {
     constructor(game) {
         super(game)
         this.game.scoreboard.hideScoreboard()
+        this.game.borderInactiveTicks = 0
 
         this.buttons = [new Button(this.ctx, "Add Player", 0.33, 0.85, 
                 Config.text.colour, Config.text.font.medium, "center", "middle",
@@ -50,7 +51,7 @@ class StartScreen extends State {
     }
 
     render() {
-        this.game.renderBorder(1)
+        this.game.renderBorder()
 
         for (const button of this.buttons) button.render()
         // SelfWidthBoost.render(this.ctx, 0.5, 0.5)

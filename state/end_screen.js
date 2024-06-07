@@ -32,7 +32,7 @@ class EndScreen extends State {
     mouseHandler() {}
 
     render() {
-        this.game.renderBorder(1)
+        this.game.renderBorder()
         this.game.renderObstacles()
         this.game.renderPlayers()
 
