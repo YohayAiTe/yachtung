@@ -31,7 +31,6 @@ class InRound extends State {
     mouseHandler() {}
 
     render() {
-        // TODO: make border flash
         this.game.renderBorder()
         this.game.renderObstacles()
         this.game.renderPlayers()
