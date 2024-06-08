@@ -8,14 +8,15 @@ class Game {
         this.scoreboard = scoreboard
         this.powerupManager = new PowerupManager(this, this.#powerupFunction)
 
+        const cfgPlayers = CONFIG.UI.players
+
         /** @type {Player[]} */
         this.players = []
-        for (let i = 0; i < Config.defaultPlayers.keys.length; i++) {
-            const settings = Config.defaultPlayers.settings[i];
-            const keys = Config.defaultPlayers.keys[i];
-            const player = new Player(settings.name, settings.pattern, settings.invertedPattern)
-            player.leftKey = keys.left
-            player.rightKey = keys.right
+        for (const [idx, controls] of cfgPlayers.defaultControls.entries()) {
+            const display = cfgPlayers.display[idx]
+            const player = new Player(display.name, display.pattern, display.invertedPattern)
+            player.leftKey = controls.left
+            player.rightKey = controls.right
             this.players.push(player)
         }
 
@@ -35,9 +36,9 @@ class Game {
      * @param {number} t 
      */
     #powerupFunction(t) {
-        const funcConfig = Config.gameplay.powerups.function
-        const baseValue = (Math.cos(2*Math.PI*(t/funcConfig.period + funcConfig.phase))+1)/2
-        return baseValue * (funcConfig.maxExpectedTime-funcConfig.minExpectedTime) + funcConfig.minExpectedTime
+        const cfgFuncParams = CONFIG.powerups.generation.funcParams
+        const baseValue = (Math.cos(2*Math.PI*(t/cfgFuncParams.period + cfgFuncParams.phase))+1)/2
+        return baseValue * (cfgFuncParams.maxExpectedTime-cfgFuncParams.minExpectedTime) + cfgFuncParams.minExpectedTime
     }
 
     /**
@@ -53,6 +54,14 @@ class Game {
      */
     keyHandler(event) {
         this.state.keyHandler(event)
+    }
+
+    /**
+     * @param {KeyboardEvent} event 
+     * @returns {Boolean}
+     */
+    isContinueKeyEvent(event) {
+        return CONFIG.UI.controls.continueGameKeys.includes(event.code) && event.type === "keyup"
     }
 
     /**
@@ -72,24 +81,25 @@ class Game {
     }
 
     renderBorder() {
-        const borderConfig = Config.gameplay.border
-        const w = borderConfig.width
+        const w = CONFIG.gameplay.borderWidth
+        const cfgBorderIndicator = CONFIG.powerups.effects.border.indicator
 
         if (this.borderInactiveTicks === 0) {
-            this.ctx.fillStyle = borderConfig.colour
+            this.ctx.fillStyle = cfgBorderIndicator.colour
             this.ctx.fillRect(0, 0, 1, w)
             this.ctx.fillRect(0, 1-w, 1, w)
             this.ctx.fillRect(0, w, w, 1-2*w)
             this.ctx.fillRect(1-w, w, w, 1-2*w)
             return
         }
+
         const prevOpacity = this.ctx.globalAlpha
-        this.ctx.globalAlpha = (1+Math.cos(2*Math.PI*this.borderInactiveTicks/Config.gameplay.border.inactiveFlashPeriod)) / 2
+        this.ctx.globalAlpha = (1+Math.cos(2*Math.PI*this.borderInactiveTicks/cfgBorderIndicator.inactiveFlashPeriod)) / 2
 
-        const endInactiveIndicatorTicks = Math.min(borderConfig.endInactiveIndicatorStart, this.borderInactiveTicks)
-        const f = endInactiveIndicatorTicks / borderConfig.endInactiveIndicatorStart
+        const endInactiveIndicatorTicks = Math.min(cfgBorderIndicator.endInactiveIndicatorStart, this.borderInactiveTicks)
+        const f = endInactiveIndicatorTicks / cfgBorderIndicator.endInactiveIndicatorStart
 
-        this.ctx.fillStyle = borderConfig.colour
+        this.ctx.fillStyle = cfgBorderIndicator.colour
         this.ctx.beginPath()
         this.ctx.moveTo(0, 0)
         this.ctx.lineTo(1, 0)
@@ -101,7 +111,7 @@ class Game {
         this.ctx.lineTo(1 - w*(1-f), w*(1-f))
         this.ctx.fill()
 
-        this.ctx.fillStyle = borderConfig.inactiveColour
+        this.ctx.fillStyle = cfgBorderIndicator.inactiveColour
         this.ctx.beginPath()
         this.ctx.moveTo(w*(1-f), w*(1-f))
         this.ctx.lineTo(1 - w*(1-f), w*(1-f))

@@ -38,9 +38,10 @@ class InRound extends State {
     }
 
     mainloop() {
-        if (this.trailTicks == Config.gameplay.trailOnTicks) {
+        const cfgObstacle = CONFIG.gameplay.obstacle
+        if (this.trailTicks == cfgObstacle.onTicks) {
             this.endTrail(this.game)
-            this.trailTicks = -Config.gameplay.trailOffTicks
+            this.trailTicks = -cfgObstacle.offTicks
         } else if (this.trailTicks == 0) {
             this.startTrail(this.game)
         }
@@ -48,7 +49,7 @@ class InRound extends State {
 
         for (const player of this.game.players) player.move()
 
-        const borderWidth = Config.gameplay.border.width
+        const borderWidth = CONFIG.gameplay.borderWidth
         /** @type {number} */
         let justDied = 0
         for (const player of this.game.players) {
@@ -108,7 +109,7 @@ class InRound extends State {
 
     /** @param {Player} player */
     #startTrailForPlayer(player) {
-        player.currentObstacle = new Obstacle(Config.gameplay.player.obstacleFraction * player.width, player)
+        player.currentObstacle = new Obstacle(CONFIG.gameplay.obstacle.widthFraction * player.width, player)
         this.game.obstacles.push(player.currentObstacle)
     }
 

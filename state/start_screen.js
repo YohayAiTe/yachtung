@@ -15,11 +15,13 @@ class StartScreen extends State {
         this.game.scoreboard.hideScoreboard()
         this.game.borderInactiveTicks = 0
 
+        const cfgText = CONFIG.UI.text
+
         this.buttons = [new Button(this.ctx, "Add Player", 0.33, 0.85, 
-                Config.text.colour, Config.text.font.medium, "center", "middle",
+                cfgText.colour, cfgText.font.medium, "center", "middle",
                 this.addPlayer.bind(this)),
             new Button(this.ctx, "Start Game", 0.67, 0.85, 
-                Config.text.colour, Config.text.font.medium, "center", "middle",
+                cfgText.colour, cfgText.font.medium, "center", "middle",
                 this.#startGame.bind(this))]
         this.#recreatePlayerButtons()
         for (const player of this.game.players) player.score = 0
@@ -27,7 +29,7 @@ class StartScreen extends State {
 
     /** @type {KeyHandler} */
     keyHandler(event) {
-        if (event.code === Config.continueGameKey && event.type === "keyup") {
+        if (this.game.isContinueKeyEvent(event)) {
             if (this.queuedPresses.length > 0) return
             this.#startGame()
         }
@@ -61,28 +63,30 @@ class StartScreen extends State {
         const players = this.game.players
         this.buttons = this.buttons.slice(0, 2)
 
+        const cfgText = CONFIG.UI.text
+
         for (const [idx, player] of players.entries()) {
             const y = 0.13+0.07*idx
             const colour = player.pattern.linearGradient(this.ctx, 0, y, 1, y)
 
             this.buttons.push(
                 new Button(this.ctx, "X", 0.1, y, 
-                    colour, Config.text.font.small, "left", "middle", 
+                    colour, cfgText.font.small, "left", "middle", 
                     () => {
                         players.splice(players.indexOf(player), 1)
                         this.#recreatePlayerButtons()
                     }),
                 new Button(this.ctx, player.name, 0.33, y, 
-                    colour, Config.text.font.medium, "center", "middle"),
+                    colour, cfgText.font.medium, "center", "middle"),
                 new Button(this.ctx, player.leftKey ? player.leftKey : "", 0.64, y, 
-                    colour, Config.text.font.small, "right", "middle",
+                    colour, cfgText.font.small, "right", "middle",
                     () => {
                         player.leftKey = null
                         this.queuedPresses.push({player: player, key: "left"})
                         this.#showFirstQueuedPress()
                     }),
                 new Button(this.ctx, player.rightKey ? player.rightKey : "", 0.70, y, 
-                    colour, Config.text.font.small, "left", "middle",
+                    colour, cfgText.font.small, "left", "middle",
                     () => {
                         player.rightKey = null
                         this.queuedPresses.push({player: player, key: "right"})
@@ -108,20 +112,20 @@ class StartScreen extends State {
     }
 
     addPlayer() {
-        const playerSettings = Config.defaultPlayers.settings
+        const cfgPlayers = CONFIG.UI.players.display
 
-        if (this.game.players.length >= playerSettings.length) return
+        if (this.game.players.length >= cfgPlayers.length) return
         const takenNames = this.game.players.map(p => p.name)
         let idx = -1
-        for (let i = 0; i < playerSettings.length; i++) {
-            const name = playerSettings[i].name;
+        for (let i = 0; i < cfgPlayers.length; i++) {
+            const name = cfgPlayers[i].name;
             if (takenNames.indexOf(name) < 0) {
                 idx = i
                 break
             }
         }
 
-        const newPlayer = new Player(playerSettings[idx].name, playerSettings[idx].pattern, playerSettings[idx].invertedPattern)
+        const newPlayer = new Player(cfgPlayers[idx].name, cfgPlayers[idx].pattern, cfgPlayers[idx].invertedPattern)
         this.game.players.push(newPlayer)
         this.queuedPresses.push({player: newPlayer, key: "left"}, {player: newPlayer, key: "right"})
         this.#showFirstQueuedPress()

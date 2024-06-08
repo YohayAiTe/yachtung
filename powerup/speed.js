@@ -24,7 +24,8 @@ class BaseSpeedPowerup extends Powerup {
         }
     }
 
-    static get duration() { return Config.gameplay.powerups.speedPowerupDuration }
+    /** @returns {number} */
+    static get duration() { return CONFIG.powerups.effects.speed.duration }
 
     static get baseColor() { return this.doAffectSelf ? "green" : "red" }
 
@@ -52,20 +53,24 @@ class BaseSpeedPowerup extends Powerup {
 class SelfSpeedBoost extends BaseSpeedPowerup {
     constructor(game, player) { super(game, player) }
     static doAffectSelf = true
-    static multiplier = 2
+    /** @type {number} */
+    static multiplier = CONFIG.powerups.effects.speed.multiplier
 }
 class OtherSpeedBoost extends BaseSpeedPowerup {
     constructor(game, player) { super(game, player) }
     static doAffectSelf = false
-    static multiplier = 2
+    /** @type {number} */
+    static multiplier = CONFIG.powerups.effects.speed.multiplier
 }
 class SelfSpeedDeboost extends BaseSpeedPowerup {
     constructor(game, player) { super(game, player) }
     static doAffectSelf = true
-    static multiplier = 0.5
+    /** @type {number} */
+    static multiplier = 1 / CONFIG.powerups.effects.speed.multiplier
 }
 class OtherSpeedDeboost extends BaseSpeedPowerup {
     constructor(game, player) { super(game, player) }
     static doAffectSelf = false
-    static multiplier = 0.5
+    /** @type {number} */
+    static multiplier = 1 / CONFIG.powerups.effects.speed.multiplier
 }

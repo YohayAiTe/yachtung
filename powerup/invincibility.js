@@ -6,12 +6,10 @@ class InvincibilityPowerup extends Powerup {
     constructor(game, player) {
         super(game, player)
         
-        this.player.invincibilityTicks = Config.gameplay.powerups.borderPowerupDuration
+        this.player.invincibilityTicks = CONFIG.powerups.effects.invincibility.duration
     }
 
     endEffect() {}
-
-    static get width() { return Config.gameplay.powerups.width }
 
     static get duration() { return 0 }
 
@@ -21,11 +19,12 @@ class InvincibilityPowerup extends Powerup {
     static render(ctx, x, y) {
         super.render(ctx, x, y)
 
+
         ctx.fillStyle = "yellow"
         ctx.beginPath()
-        ctx.arc(x, y, Config.gameplay.powerups.width / 2, 0, 2*Math.PI, true)
+        ctx.arc(x, y, this.width / 2, 0, 2*Math.PI, true)
         ctx.closePath()
-        ctx.arc(x, y, Config.gameplay.powerups.width / 4, 0, 2*Math.PI, false)
+        ctx.arc(x, y, this.width / 4, 0, 2*Math.PI, false)
         ctx.closePath()
         ctx.fill()
     }

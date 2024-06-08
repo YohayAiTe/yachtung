@@ -52,17 +52,15 @@ class Player {
         this.isLeftPressed = false
         this.isRightPressed = false
 
-        const startConfig = Config.gameplay.start
+        const cgfRange = CONFIG.gameplay.round.generationRange
+        const startOffset = (1-cgfRange) / 2
+        this.position = [Math.random()*cgfRange + startOffset, Math.random()*cgfRange + startOffset]
 
-        const startRange = startConfig.generationRange
-        const startOffset = (1-startRange) / 2
-        this.position = [Math.random()*startRange + startOffset, Math.random()*startRange + startOffset]
-
-        const playerConfig = Config.gameplay.player
-        this.velocity = playerConfig.velocity
-        this.angularVelocity = playerConfig.angularVelocity
+        const cfgMovement = CONFIG.gameplay.movement
+        this.velocity = cfgMovement.velocity
+        this.angularVelocity = cfgMovement.angularVelocity
         this.currentAngle = Math.random()*2*Math.PI
-        this.width = playerConfig.width
+        this.width = cfgMovement.width
 
         this.isAlive = true
         this.currentObstacle = null
@@ -112,11 +110,12 @@ class Player {
         ctx.beginPath()
         ctx.arc(this.position[0], this.position[1], this.width, 0, 2*Math.PI, true)
         ctx.closePath()
-        
+
+        const cfgInvincibilityIndicator = CONFIG.powerups.effects.invincibility.indicator
         if (this.invincibilityTicks > 0) {
-            const invincibilityHoleTicks = Math.min(this.invincibilityTicks, Config.gameplay.powerups.maxInvincibilityHoleTicks)
-            const invincibilityHoleFraction = invincibilityHoleTicks / Config.gameplay.powerups.maxInvincibilityHoleTicks * 
-                Config.gameplay.powerups.maxInvincibilityHoleFraction
+            const invincibilityHoleTicks = Math.min(this.invincibilityTicks, cfgInvincibilityIndicator.maxHoleTicks)
+            const invincibilityHoleFraction = invincibilityHoleTicks / cfgInvincibilityIndicator.maxHoleTicks * 
+                cfgInvincibilityIndicator.holeFraction
         
             ctx.arc(this.position[0], this.position[1], this.width * invincibilityHoleFraction, 0, 2*Math.PI, false)
             ctx.closePath()

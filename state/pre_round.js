@@ -15,7 +15,7 @@ class PreRound extends State {
         this.countdown = 3+1
         this.reduceCountdown()
 
-        const startConfig = Config.gameplay.start
+        const cfgStartEffects = CONFIG.gameplay.round.startEffects
 
         this.game.obstacles = []
         this.game.powerupManager.cleanEffects()
@@ -26,11 +26,11 @@ class PreRound extends State {
 
         this.game.borderInactiveTicks = 0
         for (const player of this.game.players) {
-            player.invincibilityTicks = startConfig.invincibility + startConfig.preUpdates
+            player.invincibilityTicks = cfgStartEffects.invincibilityTicks + cfgStartEffects.trailUpdates
             
-            player.currentObstacle = new Obstacle(Config.gameplay.player.obstacleFraction * player.width, player)
+            player.currentObstacle = new Obstacle(CONFIG.gameplay.obstacle.widthFraction * player.width, player)
             this.game.obstacles.push(player.currentObstacle)
-            for (let i = 0; i < startConfig.preUpdates; i++) player.move()
+            for (let i = 0; i < cfgStartEffects.trailUpdates; i++) player.move()
             player.currentObstacle.activatePoints()
         }
     }
@@ -52,10 +52,12 @@ class PreRound extends State {
         this.game.renderObstacles()
         this.game.renderPlayers()
 
-        this.ctx.font = Config.text.font.huge
+        const cfgText = CONFIG.UI.text
+
+        this.ctx.font = cfgText.font.huge
         this.ctx.textAlign = "center"
         this.ctx.textBaseline = "middle"
-        this.ctx.fillStyle = Config.text.colour
+        this.ctx.fillStyle = cfgText.colour
         this.ctx.fillText(this.countdown.toString(), 0.5, 0.5)
     }
 

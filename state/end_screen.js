@@ -25,7 +25,7 @@ class EndScreen extends State {
 
     /** @type {KeyHandler} */
     keyHandler(event) {
-        if (event.code === Config.continueGameKey && event.type === "keyup") this.game.setState(StartScreen)
+        if (this.game.isContinueKeyEvent(event)) this.game.setState(StartScreen)
     }
 
     /** @type {MouseHandler} */
@@ -36,22 +36,25 @@ class EndScreen extends State {
         this.game.renderObstacles()
         this.game.renderPlayers()
 
+        const cfgText = CONFIG.UI.text
+        const cfgContinueKey = CONFIG.UI.controls.continueGameKeys[0]
+
         this.ctx.textAlign = "center"
         this.ctx.textBaseline = "middle"
-        this.ctx.font = Config.text.font.large
+        this.ctx.font = cfgText.font.large
         
         if (this.#topAchievers > 1) {
-            this.ctx.fillStyle = Config.text.colour
+            this.ctx.fillStyle = cfgText.colour
             this.ctx.fillText(`There are ${this.#topAchievers} winners!`, 0.5, 0.5)
-            this.ctx.font = Config.text.font.medium
-            this.ctx.fillText(`Press ${Config.continueGameKey} to start again`, 0.5, 0.6)
+            this.ctx.font = cfgText.font.medium
+            this.ctx.fillText(`Press ${cfgContinueKey} to start again`, 0.5, 0.6)
         } else {
             const winningPlayer = this.#sortedPlayers[0]
             this.ctx.fillStyle = winningPlayer.pattern.linearGradient(this.ctx, 0, 0.5, 1, 0.5)
             this.ctx.fillText(`${winningPlayer.name} has won with ${winningPlayer.score} points!`, 0.5, 0.5)
-            this.ctx.fillStyle = Config.text.colour
-            this.ctx.font = Config.text.font.medium
-            this.ctx.fillText(`Press ${Config.continueGameKey} to start again`, 0.5, 0.6)
+            this.ctx.fillStyle = cfgText.colour
+            this.ctx.font = cfgText.font.medium
+            this.ctx.fillText(`Press ${cfgContinueKey} to start again`, 0.5, 0.6)
         }
     }
 }
