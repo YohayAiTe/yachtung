@@ -93,6 +93,7 @@ class StartScreen extends State {
                 player.name = playerNameTextarea.value
             }
 
+            // TODO: better show keys
             const playerLeftControlButton = document.createElement("button")
             playerLeftControlButton.innerText = player.leftKey
             playerLeftControlButton.className = "player-controls player-left-control"
