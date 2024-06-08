@@ -4,8 +4,6 @@
  * @extends State
  */
 class InRound extends State {
-    
-    // TODO: make intervals random and per player
     /** @type {number|null} */
     interval = null
     /** @type {number} */
@@ -38,16 +36,7 @@ class InRound extends State {
     }
 
     mainloop() {
-        const cfgObstacle = CONFIG.gameplay.obstacle
-        if (this.trailTicks == cfgObstacle.onTicks) {
-            this.endTrail(this.game)
-            this.trailTicks = -cfgObstacle.offTicks
-        } else if (this.trailTicks == 0) {
-            this.startTrail(this.game)
-        }
-        this.trailTicks++
-
-        for (const player of this.game.players) player.move()
+        for (const player of this.game.players) this.game.updatePlayer(player)
 
         const borderWidth = CONFIG.gameplay.borderWidth
         /** @type {number} */
@@ -67,19 +56,19 @@ class InRound extends State {
             } else {
                 if (player.position[0] < 0) {
                     player.position[0] += 1
-                    this.#startTrailForPlayer(player)
+                    this.game.recreatePlayerObstacle(player)
                 }
                 if (player.position[0] > 1) {
                     player.position[0] -= 1
-                    this.#startTrailForPlayer(player)
+                    this.game.recreatePlayerObstacle(player)
                 }
                 if (player.position[1] < 0) {
                     player.position[1] += 1
-                    this.#startTrailForPlayer(player)
+                    this.game.recreatePlayerObstacle(player)
                 }
                 if (player.position[1] > 1) {
                     player.position[1] -= 1
-                    this.#startTrailForPlayer(player)
+                    this.game.recreatePlayerObstacle(player)
                 }
             }
             if (player.invincibilityTicks <= 0) {
@@ -105,22 +94,5 @@ class InRound extends State {
 
         this.game.powerupManager.update()
         if (this.game.borderInactiveTicks > 0) this.game.borderInactiveTicks--
-    }
-
-    /** @param {Player} player */
-    #startTrailForPlayer(player) {
-        player.currentObstacle = new Obstacle(CONFIG.gameplay.obstacle.widthFraction * player.width, player)
-        this.game.obstacles.push(player.currentObstacle)
-    }
-
-    startTrail() {
-        for (const player of this.game.players) {
-            if (!player.isAlive) continue
-            this.#startTrailForPlayer(player)
-        }
-    }
-
-    endTrail() {
-        for (const player of this.game.players) player.currentObstacle = null
     }
 }

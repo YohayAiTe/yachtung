@@ -28,9 +28,7 @@ class PreRound extends State {
         for (const player of this.game.players) {
             player.invincibilityTicks = cfgStartEffects.invincibilityTicks + cfgStartEffects.trailUpdates
             
-            player.currentObstacle = new Obstacle(CONFIG.gameplay.obstacle.widthFraction * player.width, player)
-            this.game.obstacles.push(player.currentObstacle)
-            for (let i = 0; i < cfgStartEffects.trailUpdates; i++) player.move()
+            for (let i = 0; i < cfgStartEffects.trailUpdates; i++) this.game.updatePlayer(player)
             player.currentObstacle.activatePoints()
         }
     }

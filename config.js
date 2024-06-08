@@ -145,8 +145,12 @@ const CONFIG = Object.freeze({
         },
         obstacle: {
             widthFraction: 0.65,
-            onTicks: 80,
-            offTicks: 20,
+            meanOnTicks: 80,
+            stddevOnTicks: 8,
+            minOnTicks: 40,
+            meanOffTicks: 20,
+            stddevOffTicks: 2,
+            minOffticks: 10,
         },
         round: {
             generationRange: 0.8,

@@ -133,4 +133,23 @@ class Game {
     renderObstacles() {
         for (const obstacle of this.obstacles) obstacle.render(this.ctx)
     }
+
+    /**
+     * 
+     * @param {Player} player 
+     */
+    updatePlayer(player) {
+        player.move()
+        const obstacle = player.updateObstacle()
+        if (obstacle) this.obstacles.push(obstacle)
+    }
+
+    /**
+     * 
+     * @param {Player} player 
+     */
+    recreatePlayerObstacle(player) {
+        const obstacle = player.recreateObstacle()
+        if (obstacle) this.obstacles.push(obstacle)
+    }
 }

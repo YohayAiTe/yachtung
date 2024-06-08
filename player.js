@@ -23,6 +23,8 @@ class Player {
 
     /** @type {boolean} */
     isAlive = true
+    /** @type {number} */
+    currentObstacleTicks = 0
     /** @type {Obstacle|null} */
     currentObstacle = null
 
@@ -63,6 +65,7 @@ class Player {
         this.width = cfgMovement.width
 
         this.isAlive = true
+        this.currentObstacleTicks = 0
         this.currentObstacle = null
 
         this.invincibilityTicks = 0
@@ -91,6 +94,49 @@ class Player {
         if (this.invincibilityTicks > 0) this.invincibilityTicks--
     }
 
+    /**
+     * 
+     * @param {number} mean 
+     * @param {number} stddev 
+     * @param {number} min 
+     * @returns {number}
+     */
+    #normalRandom(mean, stddev, min) {
+        const u = 1 - Math.random()
+        const v = Math.random()
+        const z = Math.sqrt(-2*Math.log(u)) * Math.cos(2*Math.PI*v)
+        return Math.max(Math.round(z*stddev + mean), min)
+    }
+
+    /**
+     * 
+     * @returns {Obstacle|null}
+     */
+    recreateObstacle() {
+        if (!this.currentObstacle) return null
+        this.currentObstacle = new Obstacle(this.width * CONFIG.gameplay.obstacle.widthFraction, this)
+        return this.currentObstacle
+    }
+
+    /**
+     * 
+     * @returns {Obstacle|null}
+     */
+    updateObstacle() {
+        this.currentObstacleTicks--
+        if (this.currentObstacleTicks > 0) return null
+
+        const cfgObstacle = CONFIG.gameplay.obstacle
+
+        if (this.currentObstacle) {
+            this.currentObstacle = null
+            this.currentObstacleTicks = this.#normalRandom(cfgObstacle.meanOffTicks, cfgObstacle.stddevOffTicks, cfgObstacle.minOffticks)
+            return null
+        }
+        this.currentObstacleTicks = this.#normalRandom(cfgObstacle.meanOnTicks, cfgObstacle.stddevOnTicks, cfgObstacle.minOnTicks)
+        this.currentObstacle = new Obstacle(this.width * cfgObstacle.widthFraction, this)
+        return this.currentObstacle
+    }
 
     /**
      * 
