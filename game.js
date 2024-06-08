@@ -117,43 +117,10 @@ class Game {
     }
 
     renderPlayers() {
-        for (const player of this.players) {
-            this.ctx.fillStyle = player.keyDirections === 1 ? 
-                player.pattern.radialGradient(this.ctx, ...player.position, player.width) : 
-                player.invertedPattern.radialGradient(this.ctx, ...player.position, player.width)
-
-            this.ctx.beginPath()
-            this.ctx.arc(player.position[0], player.position[1], player.width, 0, 2*Math.PI, true)
-            this.ctx.closePath()
-            
-            if (player.invincibilityTicks > 0) {
-                const invincibilityHoleTicks = Math.min(player.invincibilityTicks, Config.gameplay.powerups.maxInvincibilityHoleTicks)
-                const invincibilityHoleFraction = invincibilityHoleTicks / Config.gameplay.powerups.maxInvincibilityHoleTicks * 
-                    Config.gameplay.powerups.maxInvincibilityHoleFraction
-            
-                this.ctx.arc(player.position[0], player.position[1], player.width * invincibilityHoleFraction, 0, 2*Math.PI, false)
-                this.ctx.closePath()
-            }
-            this.ctx.fill()
-        }
+        for (const player of this.players) player.render(this.ctx)
     }
 
     renderObstacles() {
-        this.ctx.lineWidth = 0.001
-        for (const obstacle of this.obstacles) {
-            if (obstacle.length == 0) continue
-
-            for (let i = 0; i < obstacle.length-1; i++) {
-                this.ctx.strokeStyle = this.ctx.fillStyle = obstacle.pattern.colourAt(i/Config.defaultPlayers.gradientCycleTicks)
-                this.ctx.beginPath()
-                this.ctx.moveTo(...obstacle.getPoint(i, 1))
-                this.ctx.lineTo(...obstacle.getPoint(i+1, 1))
-                this.ctx.lineTo(...obstacle.getPoint(i+1, -1))
-                this.ctx.lineTo(...obstacle.getPoint(i, -1))
-                this.ctx.closePath()
-                this.ctx.fill()
-                this.ctx.stroke()
-            }
-        }
+        for (const obstacle of this.obstacles) obstacle.render(this.ctx)
     }
 }

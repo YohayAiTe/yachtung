@@ -20,27 +20,14 @@ class PreRound extends State {
         this.game.obstacles = []
         this.game.powerupManager.cleanEffects()
 
-        for (const player of this.game.players) {
-            player.isAlive = true
-            const startRange = startConfig.generationRange
-            const startOffset = (1-startRange) / 2
-            player.position = [Math.random()*startRange + startOffset, Math.random()*startRange + startOffset]
-            player.currentAngle = Math.random()*2*Math.PI
-
-            player.velocity = Config.gameplay.player.velocity
-            player.angularVelocity = Config.gameplay.player.angularVelocity
-            player.width = Config.gameplay.player.width
-        }
+        for (const player of this.game.players) player.roundReset()
         this.game.scoreboard.updateScores(this.game.players, 0)
         this.game.scoreboard.showScoreboard()
 
         this.game.borderInactiveTicks = 0
         for (const player of this.game.players) {
             player.invincibilityTicks = startConfig.invincibility + startConfig.preUpdates
-            player.keyDirections = 1
-            player.isLeftPressed = false
-            player.isRightPressed = false
-
+            
             player.currentObstacle = new Obstacle(Config.gameplay.player.obstacleFraction * player.width, player)
             this.game.obstacles.push(player.currentObstacle)
             for (let i = 0; i < startConfig.preUpdates; i++) player.move()

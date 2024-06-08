@@ -20,7 +20,7 @@ class StartScreen extends State {
                 this.addPlayer.bind(this)),
             new Button(this.ctx, "Start Game", 0.67, 0.85, 
                 Config.text.colour, Config.text.font.medium, "center", "middle",
-                () => this.game.setState(PreRound))]
+                this.#startGame.bind(this))]
         this.#recreatePlayerButtons()
         for (const player of this.game.players) player.score = 0
     }
@@ -29,7 +29,7 @@ class StartScreen extends State {
     keyHandler(event) {
         if (event.code === Config.continueGameKey && event.type === "keyup") {
             if (this.queuedPresses.length > 0) return
-            this.game.setState(PreRound)
+            this.#startGame()
         }
 
         if (this.queuedPresses.length > 0 && event.type === "keyup") {
@@ -125,5 +125,10 @@ class StartScreen extends State {
         this.game.players.push(newPlayer)
         this.queuedPresses.push({player: newPlayer, key: "left"}, {player: newPlayer, key: "right"})
         this.#showFirstQueuedPress()
+    }
+
+    #startGame() {
+        for (const player of this.game.players) player.gameReset()
+        this.game.setState(PreRound)
     }
 }

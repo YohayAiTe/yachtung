@@ -1,4 +1,40 @@
 class Player {
+
+    /** @type {string|null} */
+    leftKey = null
+    /** @type {string|null} */
+    rightKey = null
+
+    /** @type {Boolean} */
+    isLeftPressed = false
+    /** @type {Boolean} */
+    isRightPressed = false
+
+    /** @type {[number, number]} */
+    position
+    /** @type {number} */
+    velocity
+    /** @type {number} */
+    angularVelocity
+    /** @type {number} */
+    currentAngle
+    /** @type {number} */
+    width
+
+    /** @type {boolean} */
+    isAlive = true
+    /** @type {Obstacle|null} */
+    currentObstacle = null
+
+    /** @type {number} */
+    score = 0
+
+
+    /** @type {number} */
+    invincibilityTicks
+    /** @type {number} */
+    keyDirections
+
     /**
      * @param {string} name 
      * @param {Pattern} pattern
@@ -8,44 +44,37 @@ class Player {
         this.name = name
         this.pattern = pattern
         this.invertedPattern = invertedPattern
-        
-        /** @type {string|null} */
-        this.leftKey = null
-        /** @type {string|null} */
-        this.rightKey = null
 
-        /** @type {Boolean} */
+        this.gameReset()
+    }
+
+    roundReset() {
         this.isLeftPressed = false
-        /** @type {Boolean} */
         this.isRightPressed = false
 
-        const playerConfig = Config.gameplay.player
+        const startConfig = Config.gameplay.start
 
-        /** @type {[number, number]} */
-        this.position = [0.5, 0.5]
-        /** @type {number} */
+        const startRange = startConfig.generationRange
+        const startOffset = (1-startRange) / 2
+        this.position = [Math.random()*startRange + startOffset, Math.random()*startRange + startOffset]
+
+        const playerConfig = Config.gameplay.player
         this.velocity = playerConfig.velocity
-        /** @type {number} */
         this.angularVelocity = playerConfig.angularVelocity
-        /** @type {number} */
-        this.currentAngle = 0
-        /** @type {number} */
+        this.currentAngle = Math.random()*2*Math.PI
         this.width = playerConfig.width
 
-        /** @type {boolean} */
         this.isAlive = true
-
-        /** @type {number} */
-        this.score = 0
-
-        /** @type {Obstacle|null} */
         this.currentObstacle = null
 
-        /** @type {number} */
         this.invincibilityTicks = 0
-
-        /** @type {number} */
         this.keyDirections = 1
+    }
+
+    gameReset() {
+        this.roundReset()
+
+        this.score = 0
     }
 
     move() {
@@ -62,6 +91,37 @@ class Player {
         this.position[1] += this.velocity*Math.sin(this.currentAngle)
 
         if (this.invincibilityTicks > 0) this.invincibilityTicks--
+    }
+
+
+    /**
+     * 
+     * @returns {Pattern}
+     */
+    get #activePattern() {
+        return this.keyDirections === 1 ? this.pattern : this.invertedPattern
+    }
+
+    /**
+     * 
+     * @param {CanvasRenderingContext2D} ctx
+     */
+    render(ctx) {
+        ctx.fillStyle = this.#activePattern.radialGradient(ctx, ...this.position, this.width)
+
+        ctx.beginPath()
+        ctx.arc(this.position[0], this.position[1], this.width, 0, 2*Math.PI, true)
+        ctx.closePath()
+        
+        if (this.invincibilityTicks > 0) {
+            const invincibilityHoleTicks = Math.min(this.invincibilityTicks, Config.gameplay.powerups.maxInvincibilityHoleTicks)
+            const invincibilityHoleFraction = invincibilityHoleTicks / Config.gameplay.powerups.maxInvincibilityHoleTicks * 
+                Config.gameplay.powerups.maxInvincibilityHoleFraction
+        
+            ctx.arc(this.position[0], this.position[1], this.width * invincibilityHoleFraction, 0, 2*Math.PI, false)
+            ctx.closePath()
+        }
+        ctx.fill()
     }
 }
 
