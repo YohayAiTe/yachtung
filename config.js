@@ -4,7 +4,6 @@ const minute = 60*second
 const hour = 60*minute
 
 
-// TODO: make constants use UPS
 const Config = Object.freeze({
     continueGameKey: "Enter",
 
@@ -21,8 +20,8 @@ const Config = Object.freeze({
         },
 
         player: {
-            velocity: 0.0015,
-            angularVelocity: Math.PI*2/360*1.35,
+            velocity: 0.09/second,
+            angularVelocity: Math.PI*2/360*(80/second),
             width: 0.0075,
             obstacleFraction: 0.65,
         },
