@@ -37,6 +37,10 @@
                 padding: 10px 40px;
                 box-sizing: border-box;
             }
+
+            .player-name {
+                color: transparent;
+            }
         </style>
     </head>
 
@@ -53,6 +57,7 @@
     <script src="./powerup/key_change.js"></script>
     <script src="./powerup/clear_board.js"></script>
 
+    <script src="./colour.js"></script>
     <script src="./config.js"></script>
     <script src="./game.js"></script>
     <script src="./player.js"></script>
@@ -72,6 +77,7 @@
         const canvas = document.querySelector("#game-canvas")
         const scores = document.querySelector("#scores-container")
         const ctx = canvas.getContext("2d")
+        ctx.imageSmoothingEnabled = false
         resizeHandler()
 
         function resizeHandler() {

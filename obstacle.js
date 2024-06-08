@@ -15,7 +15,7 @@ class Obstacle {
      */
     constructor(width, player) {
         this.width = width
-        this.colour = player.colour
+        this.pattern = player.pattern
         this.player = player
     }
 

@@ -38,7 +38,7 @@ class EndRound extends State {
         this.ctx.font = Config.text.font.large
         this.ctx.fillText(`Press ${Config.continueGameKey} to continue`, 0.5, 0.5)
         if (this.#lastAlive) {
-            this.ctx.fillStyle = this.#lastAlive.colour
+            this.ctx.fillStyle = this.#lastAlive.pattern.linearGradient(this.ctx, 0, 0.6, 1, 0.6)
             this.ctx.font = Config.text.font.medium
             this.ctx.fillText(`${this.#lastAlive.name} won the round`, 0.5, 0.6)
         }

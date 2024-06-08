@@ -47,7 +47,7 @@ class EndScreen extends State {
             this.ctx.fillText(`Press ${Config.continueGameKey} to start again`, 0.5, 0.6)
         } else {
             const winningPlayer = this.#sortedPlayers[0]
-            this.ctx.fillStyle = winningPlayer.colour
+            this.ctx.fillStyle = winningPlayer.pattern.linearGradient(this.ctx, 0, 0.5, 1, 0.5)
             this.ctx.fillText(`${winningPlayer.name} has won with ${winningPlayer.score} points!`, 0.5, 0.5)
             this.ctx.fillStyle = Config.text.colour
             this.ctx.font = Config.text.font.medium

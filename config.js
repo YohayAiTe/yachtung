@@ -86,64 +86,67 @@ const Config = Object.freeze({
     },
     
     defaultPlayers: {
-        /** @type {{name: string, colour: string, invertedColour: string}[]} */
+        /** @type {{name: string, pattern: Pattern, invertedPattern: Pattern}[]} */
         settings: [
             {
                 name: "Rudolph", 
-                colour: "hsl(0, 100%, 50%)", 
-                invertedColour: "hsl(60, 40%, 50%)"
+                pattern: new Pattern(new Colour(0, 100, 50)),
+                invertedPattern: new Pattern(new Colour(60, 40, 50)),
             },
             {
                 name: "Rosemary", 
-                colour: "hsl(120, 100%, 25.1%)", 
-                invertedColour: "hsl(200, 40%, 40%)"
+                pattern: new Pattern(new Colour(120, 100, 25.1)),
+                invertedPattern: new Pattern(new Colour(200, 40, 40)),
             },
             {
                 name: "Bluey", 
-                colour: "hsl(240, 100%, 50%)", 
-                invertedColour: "hsl(300, 35%, 50%)"
+                pattern: new Pattern(new Colour(240, 100, 50)),
+                invertedPattern: new Pattern(new Colour(300, 35, 50)),
             },
             {
                 name: "Xi", 
-                colour: "hsl(60, 100%, 50%)", 
-                invertedColour: "hsl(160, 45%, 50%)"
-            },  // TODO: make gradient
+                pattern: new Pattern(new Colour(60, 100, 50), new Colour(0, 100, 50)),
+                invertedPattern: new Pattern(new Colour(160, 45, 50), new Colour(60, 40, 50)),
+            },
             {
                 name: "Coral", 
-                colour: "hsl(300, 100%, 50%)", 
-                invertedColour: "hsl(30, 80%, 50%)"
+                pattern: new Pattern(new Colour(300, 100, 50), new Colour(270, 50, 40), new Colour(0, 81, 70)),
+                invertedPattern: new Pattern(new Colour(30, 80, 50), new Colour(330, 60, 50), new Colour(60, 81, 60)),
             },
             {
                 name: "Ocean", 
-                colour: "hsl(180, 100%, 50%)", 
-                invertedColour: "hsl(270, 50%, 50%)"
+                pattern: new Pattern(new Colour(180, 100, 50), new Colour(240, 100, 40), new Colour(207, 44, 49)), 
+                invertedPattern: new Pattern(new Colour(270, 50, 50), new Colour(330, 50, 40), new Colour(297, 60, 49)),
             },
             {
                 name: "Pinky", 
-                colour: "hsl(327.57, 100%, 53.92%)", 
-                invertedColour: "hsl(87.57, 50%, 53.92%)"
+                pattern: new Pattern(new Colour(327.57, 100, 53.92)),
+                invertedPattern: new Pattern(new Colour(87.57, 50, 53.92)),
             },
             {
                 name: "Yoda", 
-                colour: "hsl(120, 100%, 74.9%)", 
-                invertedColour: "hsl(180, 50%, 54.9%)"
+                pattern: new Pattern(new Colour(120, 100, 74.9)),
+                invertedPattern: new Pattern(new Colour(180, 50, 54.9)),
             },
             {
                 name: "Usnavi", 
-                colour: "hsl(240, 100%, 25.1%)", 
-                invertedColour: "hsl(0, 60%, 50%)"
+                pattern: new Pattern(new Colour(240, 100, 25.1)),
+                invertedPattern: new Pattern(new Colour(0, 60, 50)),
             },
             {
                 name: "Salmonella", 
-                colour: "hsl(6.18, 100%, 71.37%)", 
-                invertedColour: "hsl(96.18, 70%, 65%)"
+                pattern: new Pattern(new Colour(6.18, 100, 71.37)),
+                invertedPattern: new Pattern(new Colour(96.18, 70, 65)),
             },
         ],
+
         /** @type {{left: string, right: string}[]} */
         keys: [
             {left: "ArrowLeft", right: "ArrowRight"},
             {left: "KeyA", right: "KeyS"},
             {left: "Numpad6", right: "Numpad9"},
-        ]
+        ],
+
+        gradientCycleTicks: second,
     },
 })
