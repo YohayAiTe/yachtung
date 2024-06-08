@@ -1,11 +1,13 @@
 class Player {
     /**
      * @param {string} name 
-     * @param {string} colour
+     * @param {Pattern} pattern
+     * @param {Pattern} invertedPattern 
      */
-    constructor(name, colour) {
+    constructor(name, pattern, invertedPattern) {
         this.name = name
-        this.colour = colour
+        this.pattern = pattern
+        this.invertedPattern = invertedPattern
         
         /** @type {string|null} */
         this.leftKey = null
@@ -51,7 +53,7 @@ class Player {
         
         const direction = (this.isRightPressed ? 1 : 0) - (this.isLeftPressed ? 1 : 0)
         const angleChange = this.angularVelocity*direction*this.keyDirections
-        const normalAngle = this.currentAngle + angleChange/2 + Math.PI/2
+        const normalAngle = this.currentAngle + Math.PI/2
         if (this.currentObstacle) this.currentObstacle.addPoint(
             [...this.position], [Math.cos(normalAngle), Math.sin(normalAngle)])
 

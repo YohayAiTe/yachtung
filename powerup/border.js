@@ -4,16 +4,14 @@ class BorderPowerup extends Powerup {
     constructor(game, player) {
         super(game, player)
         
-        this.game.borderUnactiveCount++
+        this.game.borderInactiveTicks += Config.gameplay.powerups.borderPowerupDuration
     }
 
-    endEffect() {
-        this.game.borderUnactiveCount--
-    }
+    endEffect() {}
 
     static get width() { return Config.gameplay.powerups.width }
 
-    static get duration() { return Config.gameplay.powerups.borderPowerupDuration }
+    static get duration() { return 0 }
 
     /** @type {PowerupRenderFunc} */
     static render(ctx, x, y) {

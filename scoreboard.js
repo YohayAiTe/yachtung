@@ -27,7 +27,7 @@ class Scoreboard {
 
             playerContainer.classList.add("player-container")
             playerElement.classList.add("player-name")
-            playerElement.style.color = player.colour
+            playerElement.style.background = player.pattern.cssGradient() + " text"
             playerElement.innerText = player.name
             if (player.isAlive)
             scoreElement.classList.add("player-score")

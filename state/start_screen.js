@@ -13,6 +13,7 @@ class StartScreen extends State {
     constructor(game) {
         super(game)
         this.game.scoreboard.hideScoreboard()
+        this.game.borderInactiveTicks = 0
 
         this.buttons = [new Button(this.ctx, "Add Player", 0.33, 0.85, 
                 Config.text.colour, Config.text.font.medium, "center", "middle",
@@ -50,7 +51,7 @@ class StartScreen extends State {
     }
 
     render() {
-        this.game.renderBorder(1)
+        this.game.renderBorder()
 
         for (const button of this.buttons) button.render()
         // SelfWidthBoost.render(this.ctx, 0.5, 0.5)
@@ -62,25 +63,26 @@ class StartScreen extends State {
 
         for (const [idx, player] of players.entries()) {
             const y = 0.13+0.07*idx
+            const colour = player.pattern.linearGradient(this.ctx, 0, y, 1, y)
 
             this.buttons.push(
                 new Button(this.ctx, "X", 0.1, y, 
-                    player.colour, Config.text.font.small, "left", "middle", 
+                    colour, Config.text.font.small, "left", "middle", 
                     () => {
                         players.splice(players.indexOf(player), 1)
                         this.#recreatePlayerButtons()
                     }),
                 new Button(this.ctx, player.name, 0.33, y, 
-                    player.colour, Config.text.font.medium, "center", "middle"),
+                    colour, Config.text.font.medium, "center", "middle"),
                 new Button(this.ctx, player.leftKey ? player.leftKey : "", 0.64, y, 
-                    player.colour, Config.text.font.small, "right", "middle",
+                    colour, Config.text.font.small, "right", "middle",
                     () => {
                         player.leftKey = null
                         this.queuedPresses.push({player: player, key: "left"})
                         this.#showFirstQueuedPress()
                     }),
                 new Button(this.ctx, player.rightKey ? player.rightKey : "", 0.70, y, 
-                    player.colour, Config.text.font.small, "left", "middle",
+                    colour, Config.text.font.small, "left", "middle",
                     () => {
                         player.rightKey = null
                         this.queuedPresses.push({player: player, key: "right"})
@@ -119,7 +121,7 @@ class StartScreen extends State {
             }
         }
 
-        const newPlayer = new Player(playerSettings[idx].name, playerSettings[idx].colour)
+        const newPlayer = new Player(playerSettings[idx].name, playerSettings[idx].pattern, playerSettings[idx].invertedPattern)
         this.game.players.push(newPlayer)
         this.queuedPresses.push({player: newPlayer, key: "left"}, {player: newPlayer, key: "right"})
         this.#showFirstQueuedPress()

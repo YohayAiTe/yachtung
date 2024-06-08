@@ -1,5 +1,3 @@
-// TODO: add indicator
-
 /** @extends {Powerup} */
 class KeyChangePowerup extends Powerup {
 

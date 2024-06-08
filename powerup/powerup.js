@@ -73,6 +73,7 @@ class PowerupManager {
         }
         this.#boardPowerups = []
         this.#activePowerups = []
+        this.#currentTime = 0
     }
 
     #setNextPowerupTime() {

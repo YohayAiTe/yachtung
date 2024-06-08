@@ -15,6 +15,9 @@ const Config = Object.freeze({
         border: {
             width: 0.005,
             colour: "yellow",
+            inactiveColour: "blue",
+            inactiveFlashPeriod: 1*second,
+            endInactiveIndicatorStart: 2*second,
         },
 
         player: {
@@ -66,6 +69,9 @@ const Config = Object.freeze({
             borderPowerupDuration: 6*second,
             invincibilityPowerupDuration: 3*second,
             keyChangePowerupDuration: 6*second,
+
+            maxInvincibilityHoleTicks: 1*second,
+            maxInvincibilityHoleFraction: 0.5,
         }
     },
 
@@ -80,24 +86,67 @@ const Config = Object.freeze({
     },
     
     defaultPlayers: {
-        /** @type {{name: string, colour: string}[]} */
+        /** @type {{name: string, pattern: Pattern, invertedPattern: Pattern}[]} */
         settings: [
-            {name: "Rudolph", colour: "red"},
-            {name: "Rosemary", colour: "green"},
-            {name: "Bluey", colour: "blue"},
-            {name: "Xi", colour: "yellow"},  // TODO: make gradient
-            {name: "Coral", colour: "magenta"},
-            {name: "Ocean", colour: "cyan"},
-            {name: "Pinky", colour: "pink"},
-            {name: "Yoda", colour: "lightgreen"},
-            {name: "Usnavi", colour: "navy"},
-            {name: "Salmonella", colour: "salmon"},
+            {
+                name: "Rudolph", 
+                pattern: new Pattern(new Colour(0, 100, 50)),
+                invertedPattern: new Pattern(new Colour(60, 40, 50)),
+            },
+            {
+                name: "Rosemary", 
+                pattern: new Pattern(new Colour(120, 100, 25.1)),
+                invertedPattern: new Pattern(new Colour(200, 40, 40)),
+            },
+            {
+                name: "Bluey", 
+                pattern: new Pattern(new Colour(240, 100, 50)),
+                invertedPattern: new Pattern(new Colour(300, 35, 50)),
+            },
+            {
+                name: "Xi", 
+                pattern: new Pattern(new Colour(60, 100, 50), new Colour(0, 100, 50)),
+                invertedPattern: new Pattern(new Colour(160, 45, 50), new Colour(60, 40, 50)),
+            },
+            {
+                name: "Coral", 
+                pattern: new Pattern(new Colour(300, 100, 50), new Colour(270, 50, 40), new Colour(0, 81, 70)),
+                invertedPattern: new Pattern(new Colour(30, 80, 50), new Colour(330, 60, 50), new Colour(60, 81, 60)),
+            },
+            {
+                name: "Ocean", 
+                pattern: new Pattern(new Colour(180, 100, 50), new Colour(240, 100, 40), new Colour(207, 44, 49)), 
+                invertedPattern: new Pattern(new Colour(270, 50, 50), new Colour(330, 50, 40), new Colour(297, 60, 49)),
+            },
+            {
+                name: "Pinky", 
+                pattern: new Pattern(new Colour(327.57, 100, 53.92)),
+                invertedPattern: new Pattern(new Colour(87.57, 50, 53.92)),
+            },
+            {
+                name: "Yoda", 
+                pattern: new Pattern(new Colour(120, 100, 74.9)),
+                invertedPattern: new Pattern(new Colour(180, 50, 54.9)),
+            },
+            {
+                name: "Usnavi", 
+                pattern: new Pattern(new Colour(240, 100, 25.1)),
+                invertedPattern: new Pattern(new Colour(0, 60, 50)),
+            },
+            {
+                name: "Salmonella", 
+                pattern: new Pattern(new Colour(6.18, 100, 71.37)),
+                invertedPattern: new Pattern(new Colour(96.18, 70, 65)),
+            },
         ],
+
         /** @type {{left: string, right: string}[]} */
         keys: [
             {left: "ArrowLeft", right: "ArrowRight"},
             {left: "KeyA", right: "KeyS"},
             {left: "Numpad6", right: "Numpad9"},
-        ]
+        ],
+
+        gradientCycleTicks: second,
     },
 })

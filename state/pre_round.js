@@ -18,6 +18,7 @@ class PreRound extends State {
         const startConfig = Config.gameplay.start
 
         this.game.obstacles = []
+        this.game.powerupManager.cleanEffects()
 
         for (const player of this.game.players) {
             player.isAlive = true
@@ -33,7 +34,7 @@ class PreRound extends State {
         this.game.scoreboard.updateScores(this.game.players, 0)
         this.game.scoreboard.showScoreboard()
 
-        this.game.borderUnactiveCount = 0
+        this.game.borderInactiveTicks = 0
         for (const player of this.game.players) {
             player.invincibilityTicks = startConfig.invincibility + startConfig.preUpdates
             player.keyDirections = 1
@@ -60,7 +61,7 @@ class PreRound extends State {
     mouseHandler() {}
 
     render() {
-        this.game.renderBorder(1)
+        this.game.renderBorder()
         this.game.renderObstacles()
         this.game.renderPlayers()
 
