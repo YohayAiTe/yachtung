@@ -15,9 +15,8 @@ class KeyChangePowerup extends Powerup {
         }
     }
 
-    static get width() { return Config.gameplay.powerups.width }
-
-    static get duration() { return Config.gameplay.powerups.borderPowerupDuration }
+    /** @returns {number} */
+    static get duration() { return CONFIG.powerups.effects.keyChange.duration }
 
     static get baseColor() { return "red" }
 

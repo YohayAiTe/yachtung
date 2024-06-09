@@ -15,12 +15,12 @@ class EndRound extends State {
             if (player.score > topScore) topScore = player.score
         }
 
-        if ((this.game.players.length-1)*Config.gameplay.endGameFactor <= topScore) return new EndScreen(game)
+        if ((this.game.players.length-1)*CONFIG.gameplay.round.scoring.endGameFactor <= topScore) return new EndScreen(game)
     }
 
     /** @type {KeyHandler} */
     keyHandler(event) {
-        if (event.code === Config.continueGameKey && event.type === "keyup") this.game.setState(PreRound)
+        if (this.game.isContinueKeyEvent(event)) this.game.setState(PreRound)
     }
 
     /** @type {MouseHandler} */
@@ -32,14 +32,17 @@ class EndRound extends State {
         this.game.renderPlayers()
         this.game.powerupManager.render()
 
+        const cfgText = CONFIG.UI.text
+        const cfgContinueKey = CONFIG.UI.controls.continueGameKeys[0]
+
         this.ctx.textAlign = "center"
         this.ctx.textBaseline = "middle"
-        this.ctx.fillStyle = Config.text.colour
-        this.ctx.font = Config.text.font.large
-        this.ctx.fillText(`Press ${Config.continueGameKey} to continue`, 0.5, 0.5)
+        this.ctx.fillStyle = cfgText.colour
+        this.ctx.font = cfgText.font.large
+        this.ctx.fillText(`Press ${cfgContinueKey} to continue`, 0.5, 0.5)
         if (this.#lastAlive) {
             this.ctx.fillStyle = this.#lastAlive.pattern.linearGradient(this.ctx, 0, 0.6, 1, 0.6)
-            this.ctx.font = Config.text.font.medium
+            this.ctx.font = cfgText.font.medium
             this.ctx.fillText(`${this.#lastAlive.name} won the round`, 0.5, 0.6)
         }
     }

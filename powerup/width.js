@@ -24,9 +24,8 @@ class BaseWidthPowerup extends Powerup {
         }
     }
 
-    static get width() { return Config.gameplay.powerups.width }
-
-    static get duration() { return Config.gameplay.powerups.widthPowerupDuration }
+    /** @returns {number} */
+    static get duration() { return CONFIG.powerups.effects.width.duration }
 
     static get baseColor() { return this.doAffectSelf ? "green" : "red" }
 
@@ -47,20 +46,24 @@ class BaseWidthPowerup extends Powerup {
 class SelfWidthBoost extends BaseWidthPowerup {
     constructor(game, player) { super(game, player) }
     static doAffectSelf = true
-    static multiplier = 2
+    /** @type {number} */
+    static multiplier = CONFIG.powerups.effects.width.multiplier
 }
 class OtherWidthBoost extends BaseWidthPowerup {
     constructor(game, player) { super(game, player) }
     static doAffectSelf = false
-    static multiplier = 2
+    /** @type {number} */
+    static multiplier = CONFIG.powerups.effects.width.multiplier
 }
 class SelfWidthDeboost extends BaseWidthPowerup {
     constructor(game, player) { super(game, player) }
     static doAffectSelf = true
-    static multiplier = 0.5
+    /** @type {number} */
+    static multiplier = 1 / CONFIG.powerups.effects.width.multiplier
 }
 class OtherWidthDeboost extends BaseWidthPowerup {
     constructor(game, player) { super(game, player) }
     static doAffectSelf = false
-    static multiplier = 0.5
+    /** @type {number} */
+    static multiplier = 1 / CONFIG.powerups.effects.width.multiplier
 }

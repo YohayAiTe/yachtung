@@ -93,4 +93,27 @@ class Obstacle {
         }
         return false
     }
+
+    /**
+     * 
+     * @param {CanvasRenderingContext2D} ctx
+     */
+    render(ctx) {
+        if (this.length == 0) return
+
+        const cfgObstacleUI = CONFIG.UI.obstacle
+
+        ctx.lineWidth = 0.001
+        for (let i = 0; i < this.length-1; i++) {
+            ctx.strokeStyle = ctx.fillStyle = this.pattern.colourAt(i/cfgObstacleUI.gradientCycleTicks)
+            ctx.beginPath()
+            ctx.moveTo(...this.getPoint(i, 1))
+            ctx.lineTo(...this.getPoint(i+1, 1))
+            ctx.lineTo(...this.getPoint(i+1, -1))
+            ctx.lineTo(...this.getPoint(i, -1))
+            ctx.closePath()
+            ctx.fill()
+            ctx.stroke()
+        }
+    }
 }

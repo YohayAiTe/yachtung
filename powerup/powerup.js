@@ -18,7 +18,7 @@ class Powerup {
         console.error("calling endEffect without override")
     }
 
-    static get width() { return Config.gameplay.powerups.width }
+    static get width() { return CONFIG.gameplay.powerupWidth }
 
     static get duration() { return 0 }
 
@@ -121,15 +121,15 @@ class PowerupManager {
 
         // generate powerup
         if (this.#nextPowerupTime <= 0){
-            const powerupWeights = Config.gameplay.powerups.weights
+            const cfgPoweupWeights = CONFIG.powerups.generation.weights
             let powerupNumber = Math.random()
-            const powerupTotalWeights = powerupWeights.map(p => p.weight).reduce((s, a) => s+a, 0)
+            const powerupTotalWeights = cfgPoweupWeights.map(p => p.weight).reduce((s, a) => s+a, 0)
             /** @type {Function|null} */
             let powerupType = null
-            for (const powerup of powerupWeights) {
+            for (const powerup of cfgPoweupWeights) {
                 powerupNumber -= powerup.weight / powerupTotalWeights
                 if (powerupNumber < 0) {
-                    powerupType = powerup.powerupType
+                    powerupType = powerup.getPowerupType()
                     break
                 }
             }
@@ -159,3 +159,4 @@ class PowerupManager {
 //  - Change angular velocity
 //  - Random walls
 //  - Player swap
+//  - No obstacles

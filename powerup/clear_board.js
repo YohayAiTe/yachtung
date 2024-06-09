@@ -10,7 +10,5 @@ class ClearBoardPowerup extends Powerup {
 
     endEffect() {}
 
-    static get width() { return Config.gameplay.powerups.width }
-
     static get duration() { return 0 }
 }

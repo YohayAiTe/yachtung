@@ -4,12 +4,10 @@ class BorderPowerup extends Powerup {
     constructor(game, player) {
         super(game, player)
         
-        this.game.borderInactiveTicks += Config.gameplay.powerups.borderPowerupDuration
+        this.game.borderInactiveTicks += CONFIG.powerups.effects.border.duration
     }
 
     endEffect() {}
-
-    static get width() { return Config.gameplay.powerups.width }
 
     static get duration() { return 0 }
 
