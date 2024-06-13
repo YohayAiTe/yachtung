@@ -18,6 +18,8 @@
     overflow: hidden;
     justify-self: left;
     grid-column: player-name;
+    width: 100%;
+    padding: 0;
 }
 
 #overlay.state-start-screen > .player-controls {
@@ -71,7 +73,7 @@
     justify-content: center;
     align-content: center;
 }
-#overlay.state-end-screen > * {
+#overlay.state-end-round > * {
     justify-self: center;
     align-self: center;
 }

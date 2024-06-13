@@ -22,18 +22,25 @@ class Scoreboard {
 
         for (const player of players.toSorted((p1, p2) => p2.score - p1.score)) {
             const playerContainer = document.createElement("div")
-            const playerElement = document.createElement(player.isAlive ? "span" : "s")
+            const playerElement = document.createElement("span")
             const scoreElement = document.createElement("span")
 
             playerContainer.classList.add("player-container")
             playerElement.classList.add("player-name")
             playerElement.style.background = player.pattern.cssGradient() + " text"
             playerElement.innerText = player.name
-            if (player.isAlive)
             scoreElement.classList.add("player-score")
             scoreElement.innerText = player.score.toString()
 
-            playerContainer.appendChild(playerElement)
+            if (player.isAlive) {
+                playerContainer.appendChild(playerElement)
+            } else {
+                const deadStrikeThrough = document.createElement("span")
+                deadStrikeThrough.style.backgroundImage = player.pattern.cssGradient()
+                deadStrikeThrough.classList.add("dead-player")
+                deadStrikeThrough.appendChild(playerElement)
+                playerContainer.appendChild(deadStrikeThrough)
+            }
             playerContainer.appendChild(scoreElement)
             this.container.appendChild(playerContainer)
         }
