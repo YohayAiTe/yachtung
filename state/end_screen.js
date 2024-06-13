@@ -47,9 +47,6 @@ class EndScreen extends State {
         if (this.game.isContinueKeyEvent(event)) this.game.setState(StartScreen)
     }
 
-    /** @type {MouseHandler} */
-    mouseHandler() {}
-
     render() {
         this.game.renderBorder()
         this.game.renderObstacles()

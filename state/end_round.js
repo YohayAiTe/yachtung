@@ -38,9 +38,6 @@ class EndRound extends State {
         if (this.game.isContinueKeyEvent(event)) this.game.setState(PreRound)
     }
 
-    /** @type {MouseHandler} */
-    mouseHandler() {}
-
     render() {
         this.game.renderBorder()
         this.game.renderObstacles()

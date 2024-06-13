@@ -66,15 +66,6 @@ class Game {
         return CONFIG.UI.controls.continueGameKeys.includes(event.code) && event.type === "keyup"
     }
 
-    /**
-     * @param {MouseEvent} event 
-     */
-    mouseHandler(event) {
-        if (event.repeat) return
-        const transform = this.ctx.getTransform()
-        this.state.mouseHandler(event, event.pageX/transform.a, event.pageY/transform.d)
-    }
-
     resizeHandler() { this.state.render(this) }
 
     render() {

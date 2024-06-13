@@ -109,8 +109,6 @@
         const game = new Game(ctx, overlay, scoreboard)
         window.addEventListener("keydown", event => game.keyHandler(event))
         window.addEventListener("keyup", event => game.keyHandler(event))
-        // window.addEventListener("mousedown", event => game.mouseHandler(event))
-        window.addEventListener("mouseup", event => game.mouseHandler(event))
         window.addEventListener("resize", () => game.resizeHandler())
 
         function requestRepaint() {

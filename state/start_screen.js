@@ -37,9 +37,6 @@ class StartScreen extends State {
         }
     }
 
-    /** @type {MouseHandler} */
-    mouseHandler() {}
-
     render() {
         this.game.renderBorder()
     }

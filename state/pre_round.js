@@ -42,9 +42,6 @@ class PreRound extends State {
         }
     }
 
-    /** @type {MouseHandler} */
-    mouseHandler() {}
-
     render() {
         this.game.renderBorder()
         this.game.renderObstacles()
