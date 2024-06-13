@@ -1,10 +1,12 @@
 class Game {
     /**
      * @param {CanvasRenderingContext2D} ctx
+     * @param {HTMLDivElement} overlay 
      * @param {Scoreboard} scoreboard
      */
-    constructor(ctx, scoreboard) {
+    constructor(ctx, overlay, scoreboard) {
         this.ctx = ctx
+        this.overlay = overlay
         this.scoreboard = scoreboard
         this.powerupManager = new PowerupManager(this, this.#powerupFunction)
 

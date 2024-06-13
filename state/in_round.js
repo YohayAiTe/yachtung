@@ -6,14 +6,11 @@
 class InRound extends State {
     /** @type {number|null} */
     interval = null
-    /** @type {number} */
-    trailTicks = 0
 
     constructor(game) {
-        super(game)
+        super(game, "in-round")
 
         this.interval = setInterval(() => this.mainloop(game), 1000/UPS)
-        this.trailTicks = 0
     }
 
     /** @type {KeyHandler} */

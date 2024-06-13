@@ -2,9 +2,12 @@ class State {
     /**
      * 
      * @param {Game} game 
+     * @param {string} overlayClassSuffix
      */
-    constructor(game) {
+    constructor(game, overlayClassSuffix) {
         this.game = game
+        this.game.overlay.innerHTML = ""
+        this.game.overlay.className = "state-"+overlayClassSuffix
     }
 
     get ctx() {

@@ -1,0 +1,113 @@
+#overlay.state-start-screen {
+    padding: 6rem 4rem;
+    box-sizing: border-box;
+    display: grid;
+    grid-template-columns: [player-remove] 2rem 2rem [player-name] 2fr [player-left-control] 1fr [player-right-control] 1fr [table-end];
+}
+
+#overlay.state-start-screen > * {
+    align-self: center;
+}
+
+#overlay.state-start-screen > .player-name {
+    font-size: 2.5rem;
+    outline: none;
+    border: none;
+    resize: none;
+    caret-color: white;
+    overflow: hidden;
+    justify-self: left;
+    grid-column: player-name;
+}
+
+#overlay.state-start-screen > .player-controls {
+    font-size: 1.75rem;
+    border: none;
+    outline: none;
+    color: transparent;
+}
+
+#overlay.state-start-screen > .player-remove {
+    grid-column: player-remove;
+    background-color: transparent;
+    justify-self: center;
+}
+#overlay.state-start-screen > .player-left-control {
+    grid-column: player-left-control;
+    justify-self: right;
+}
+#overlay.state-start-screen > .player-right-control {
+    grid-column: player-right-control;
+    justify-self: left;
+}
+
+#overlay.state-start-screen > .game-controls {
+    font-size: 3rem;
+    border: none;
+    outline: none;
+    color: white;
+    background-color: transparent;
+}
+
+
+#overlay.state-pre-round {
+    font-size: 4rem;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-content: center;
+}
+
+
+#overlay.state-in-round {
+    display: none;
+}
+
+
+#overlay.state-end-round {
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-content: center;
+}
+#overlay.state-end-screen > * {
+    justify-self: center;
+    align-self: center;
+}
+
+#overlay.state-end-round > .continue-message {
+    font-size: 4rem;
+    color: white;
+}
+#overlay.state-end-round > .round-winner {
+    font-size: 3rem;
+    color: transparent;
+}
+
+
+#overlay.state-end-screen {
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-content: center;
+}
+
+#overlay.state-end-screen > * {
+    justify-self: center;
+    align-self: center;
+}
+
+#overlay.state-end-screen > .single-winner {
+    font-size: 4rem;
+    color: transparent;
+}
+#overlay.state-end-screen > .multiple-winners {
+    font-size: 4rem;
+    color: white;
+}
+#overlay.state-end-screen > .continue {
+    font-size: 3rem;
+    color: white;
+}

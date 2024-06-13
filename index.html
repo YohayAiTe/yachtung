@@ -14,6 +14,12 @@
                 display: flex;
             }
 
+            #overlay {
+                position: fixed;
+                background-color: transparent;
+                color: white;
+            }
+
             #scores-div {
                 display: flex;
                 flex-direction: column;
@@ -42,10 +48,12 @@
                 color: transparent;
             }
         </style>
+        <link rel="stylesheet" href="./state/overlay.css">
     </head>
 
     <body>
         <canvas id="game-canvas"></canvas>
+        <div id="overlay"></div>
         <div id="scores-container"></div>
     </body>
 
@@ -76,6 +84,8 @@
     <script>
         /** @type {HTMLCanvasElement}*/
         const canvas = document.querySelector("#game-canvas")
+        /** @type {HTMLDivElement}*/
+        const overlay = document.querySelector("#overlay")
         const scores = document.querySelector("#scores-container")
         const ctx = canvas.getContext("2d")
         ctx.imageSmoothingEnabled = false
@@ -87,6 +97,8 @@
             const canvasWidth = window.innerWidth - scoresWidth
             canvas.width = canvas.height = Math.min(canvasWidth, window.innerHeight)
             scores.width = window.innerWidth - canvas.width
+            overlay.style.width = canvas.width + "px"
+            overlay.style.height = canvas.height + "px"
             ctx.setTransform(canvas.width, 0, 0, canvas.height, 0, 0)
         }
         window.addEventListener("resize", resizeHandler)
@@ -94,7 +106,7 @@
         const scoreboard = new Scoreboard(document.querySelector("#scores-container"))
 
         /** @type {Game} */
-        const game = new Game(ctx, scoreboard)
+        const game = new Game(ctx, overlay, scoreboard)
         window.addEventListener("keydown", event => game.keyHandler(event))
         window.addEventListener("keyup", event => game.keyHandler(event))
         // window.addEventListener("mousedown", event => game.mouseHandler(event))
