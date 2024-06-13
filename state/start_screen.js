@@ -47,6 +47,7 @@ class StartScreen extends State {
             const addPlayerButton = document.createElement("button")
             addPlayerButton.innerText = "Add Player"
             addPlayerButton.className = "game-controls"
+            addPlayerButton.style.justifySelf = "left"
             addPlayerButton.style.gridColumn = "player-name"
             addPlayerButton.style.gridRow = "-2"
             this.game.overlay.appendChild(addPlayerButton)
