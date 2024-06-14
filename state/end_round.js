@@ -22,14 +22,14 @@ class EndRound extends State {
         const continueGameMessageSpan = document.createElement("span")
         continueGameMessageSpan.innerText = `Press ${cfgContinueKey} to continue`
         continueGameMessageSpan.classList.add("continue-message")
-        this.game.overlay.appendChild(continueGameMessageSpan)
+        this.overlay.appendChild(continueGameMessageSpan)
 
         if (this.#lastAlive) {
             const roundWinnerSpan = document.createElement("span")
             roundWinnerSpan.innerText = `${this.#lastAlive.name} won the round`
             roundWinnerSpan.style.background = this.#lastAlive.pattern.cssGradient() + " text"
             roundWinnerSpan.classList.add("round-winner")
-            this.game.overlay.appendChild(roundWinnerSpan)
+            this.overlay.appendChild(roundWinnerSpan)
         }
     }
 

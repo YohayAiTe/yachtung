@@ -14,7 +14,7 @@ class StartScreen extends State {
 
         const availablePlayers = CONFIG.UI.players.display.length
 
-        this.game.overlay.style.gridTemplateRows = `repeat(${availablePlayers}, 1fr) 0.5fr 1.5fr`
+        this.overlay.style.gridTemplateRows = `repeat(${availablePlayers}, 1fr) 0.5fr 1.5fr`
         this.#recreatePlayerButtons()
         for (const player of this.game.players) player.score = 0
     }
@@ -42,7 +42,7 @@ class StartScreen extends State {
     }
 
     #recreatePlayerButtons() {
-        this.game.overlay.innerHTML = ""
+        this.overlay.innerHTML = ""
         {
             const addPlayerButton = document.createElement("button")
             addPlayerButton.innerText = "Add Player"
@@ -50,7 +50,7 @@ class StartScreen extends State {
             addPlayerButton.style.justifySelf = "left"
             addPlayerButton.style.gridColumn = "player-name"
             addPlayerButton.style.gridRow = "-2"
-            this.game.overlay.appendChild(addPlayerButton)
+            this.overlay.appendChild(addPlayerButton)
             addPlayerButton.onmouseup = () => {
                 if (this.queuedPresses.length === 0) this.addPlayer()
             }
@@ -60,7 +60,7 @@ class StartScreen extends State {
             startGameButton.className = "game-controls"
             startGameButton.style.gridColumn = "player-left-control / table-end"
             startGameButton.style.gridRow = "-2"
-            this.game.overlay.appendChild(startGameButton)
+            this.overlay.appendChild(startGameButton)
             startGameButton.onmouseup = () => {
                 if (this.queuedPresses.length === 0) this.#startGame()
             }
@@ -72,7 +72,7 @@ class StartScreen extends State {
             playerRemoveButton.innerText = "X"
             playerRemoveButton.className = "player-controls player-remove"
             playerRemoveButton.style.color = player.pattern.colourAt(0)
-            this.game.overlay.appendChild(playerRemoveButton)
+            this.overlay.appendChild(playerRemoveButton)
             playerRemoveButton.onmouseup = () => {
                 players.splice(players.indexOf(player), 1)
                 this.#recreatePlayerButtons()
@@ -83,7 +83,7 @@ class StartScreen extends State {
             playerNameTextarea.rows = 1
             playerNameTextarea.classList.add("player-name")
             playerNameTextarea.style.background = player.pattern.cssGradient() + " text"
-            this.game.overlay.appendChild(playerNameTextarea)
+            this.overlay.appendChild(playerNameTextarea)
             playerNameTextarea.onkeydown = e => e.stopPropagation()
             playerNameTextarea.onkeyup = e => {
                 e.stopPropagation()
@@ -97,7 +97,7 @@ class StartScreen extends State {
             playerLeftControlButton.innerText = player.leftKey
             playerLeftControlButton.className = "player-controls player-left-control"
             playerLeftControlButton.style.background = player.pattern.cssGradient(true) + " text"
-            this.game.overlay.appendChild(playerLeftControlButton)
+            this.overlay.appendChild(playerLeftControlButton)
             playerLeftControlButton.onmouseup = () => {
                 if (this.queuedPresses.length > 0) return
                 player.leftKey = null
@@ -109,7 +109,7 @@ class StartScreen extends State {
             playerRightControlButton.innerText = player.rightKey
             playerRightControlButton.className = "player-controls player-right-control"
             playerRightControlButton.style.background = player.pattern.cssGradient(false) + " text"
-            this.game.overlay.appendChild(playerRightControlButton)
+            this.overlay.appendChild(playerRightControlButton)
             playerRightControlButton.onmouseup = () => {
                 if (this.queuedPresses.length > 0) return
                 player.rightKey = null

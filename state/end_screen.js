@@ -34,12 +34,12 @@ class EndScreen extends State {
             winnerMessageSpan.style.background = winningPlayer.pattern.cssGradient() + " text"
             winnerMessageSpan.classList.add("single-winner")
         }
-        this.game.overlay.appendChild(winnerMessageSpan)
+        this.overlay.appendChild(winnerMessageSpan)
 
         const continueMessageSpan = document.createElement("span")
         continueMessageSpan.innerText = `Press ${cfgContinueKey} to start again`
         continueMessageSpan.classList.add("continue")
-        this.game.overlay.appendChild(continueMessageSpan)
+        this.overlay.appendChild(continueMessageSpan)
     }
 
     /** @type {KeyHandler} */

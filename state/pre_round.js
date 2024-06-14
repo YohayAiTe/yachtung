@@ -52,7 +52,7 @@ class PreRound extends State {
         if (this.countdown > 1) {
             setTimeout(this.reduceCountdown.bind(this), 1000)
             this.countdown--
-            this.game.overlay.innerText = this.countdown.toString()
+            this.overlay.innerText = this.countdown.toString()
         } else {
             this.game.setState(InRound)
         }

@@ -14,6 +14,10 @@ class State {
         return this.game.ctx
     }
 
+    get overlay() {
+        return this.game.overlay
+    }
+
     /**
      * @typedef {(event: KeyboardEvent) => void} KeyHandler
      * @type {KeyHandler}
