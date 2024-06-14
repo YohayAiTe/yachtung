@@ -1,12 +1,10 @@
-// TODO: add time rather than set it
-
 /** @extends {Powerup} */
 class InvincibilityPowerup extends Powerup {
 
     constructor(game, player) {
         super(game, player)
         
-        this.player.invincibilityTicks = CONFIG.powerups.effects.invincibility.duration
+        this.player.invincibilityTicks += CONFIG.powerups.effects.invincibility.duration
     }
 
     endEffect() {}
