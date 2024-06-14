@@ -147,7 +147,7 @@ const CONFIG = Object.freeze({
             generationRange: 0.8,
             scoring: {
                 endGameFactor: 5,
-                // TODO: enable tie-breaker
+                minPointsDifference: 2,
             },
             startEffects: {
                 invincibilityTicks: second,
