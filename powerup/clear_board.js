@@ -5,7 +5,7 @@ class ClearBoardPowerup extends Powerup {
         super(game, player)
         
         this.game.obstacles = []
-        this.game.state.startTrail()
+        for (const player of this.game.players) this.game.recreatePlayerObstacle(player)
     }
 
     endEffect() {}
