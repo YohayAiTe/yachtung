@@ -6,14 +6,11 @@
 class InRound extends State {
     /** @type {number|null} */
     interval = null
-    /** @type {number} */
-    trailTicks = 0
 
     constructor(game) {
-        super(game)
+        super(game, "in-round")
 
         this.interval = setInterval(() => this.mainloop(game), 1000/UPS)
-        this.trailTicks = 0
     }
 
     /** @type {KeyHandler} */
@@ -24,9 +21,6 @@ class InRound extends State {
             if (event.code == player.rightKey) player.isRightPressed = isPress
         }
     }
-
-    /** @type {MouseHandler} */
-    mouseHandler() {}
 
     render() {
         this.game.renderBorder()

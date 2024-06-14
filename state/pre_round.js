@@ -8,7 +8,7 @@ class PreRound extends State {
     countdown
 
     constructor(game) {
-        super(game)
+        super(game, "pre-round")
 
         if (this.game.players.length < 2) return new StartScreen(game)
 
@@ -42,27 +42,17 @@ class PreRound extends State {
         }
     }
 
-    /** @type {MouseHandler} */
-    mouseHandler() {}
-
     render() {
         this.game.renderBorder()
         this.game.renderObstacles()
         this.game.renderPlayers()
-
-        const cfgText = CONFIG.UI.text
-
-        this.ctx.font = cfgText.font.huge
-        this.ctx.textAlign = "center"
-        this.ctx.textBaseline = "middle"
-        this.ctx.fillStyle = cfgText.colour
-        this.ctx.fillText(this.countdown.toString(), 0.5, 0.5)
     }
 
     reduceCountdown() {
         if (this.countdown > 1) {
             setTimeout(this.reduceCountdown.bind(this), 1000)
             this.countdown--
+            this.overlay.innerText = this.countdown.toString()
         } else {
             this.game.setState(InRound)
         }

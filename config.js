@@ -6,15 +6,6 @@ const hour = 60*minute
 
 const CONFIG = Object.freeze({
     UI: {
-        text: {
-            colour: "white",
-            font: {
-                huge: "0.1px sans-serif",
-                large: "0.065px sans-serif",
-                medium: "0.05px sans-serif",
-                small: "0.035px sans-serif",
-            },
-        },
         controls: {
             continueGameKeys: ["Enter", "Space"],
         },

@@ -4,25 +4,17 @@
  */
 class StartScreen extends State {
 
-    /** @type {Button[]} */
-    buttons
-
     /** @type {{player: Player, key: "left" | "right"}[]} */
     queuedPresses = []
 
     constructor(game) {
-        super(game)
+        super(game, "start-screen")
         this.game.scoreboard.hideScoreboard()
         this.game.borderInactiveTicks = 0
 
-        const cfgText = CONFIG.UI.text
+        const availablePlayers = CONFIG.UI.players.display.length
 
-        this.buttons = [new Button(this.ctx, "Add Player", 0.33, 0.85, 
-                cfgText.colour, cfgText.font.medium, "center", "middle",
-                this.addPlayer.bind(this)),
-            new Button(this.ctx, "Start Game", 0.67, 0.85, 
-                cfgText.colour, cfgText.font.medium, "center", "middle",
-                this.#startGame.bind(this))]
+        this.overlay.style.gridTemplateRows = `repeat(${availablePlayers}, 1fr) 0.5fr 1.5fr`
         this.#recreatePlayerButtons()
         for (const player of this.game.players) player.score = 0
     }
@@ -45,54 +37,85 @@ class StartScreen extends State {
         }
     }
 
-    /** @type {MouseHandler} */
-    mouseHandler(_, x, y) {
-        if (this.queuedPresses.length > 0) return
-
-        for (const button of this.buttons) button.testClick(x, y)
-    }
-
     render() {
         this.game.renderBorder()
-
-        for (const button of this.buttons) button.render()
-        // SelfWidthBoost.render(this.ctx, 0.5, 0.5)
     }
 
     #recreatePlayerButtons() {
+        this.overlay.innerHTML = ""
+        {
+            const addPlayerButton = document.createElement("button")
+            addPlayerButton.innerText = "Add Player"
+            addPlayerButton.className = "game-controls"
+            addPlayerButton.style.justifySelf = "left"
+            addPlayerButton.style.gridColumn = "player-name"
+            addPlayerButton.style.gridRow = "-2"
+            this.overlay.appendChild(addPlayerButton)
+            addPlayerButton.onmouseup = () => {
+                if (this.queuedPresses.length === 0) this.addPlayer()
+            }
+
+            const startGameButton = document.createElement("button")
+            startGameButton.innerText = "Start Game"
+            startGameButton.className = "game-controls"
+            startGameButton.style.gridColumn = "player-left-control / table-end"
+            startGameButton.style.gridRow = "-2"
+            this.overlay.appendChild(startGameButton)
+            startGameButton.onmouseup = () => {
+                if (this.queuedPresses.length === 0) this.#startGame()
+            }
+        }
+
         const players = this.game.players
-        this.buttons = this.buttons.slice(0, 2)
+        for (const player of players) {
+            const playerRemoveButton = document.createElement("button")
+            playerRemoveButton.innerText = "X"
+            playerRemoveButton.className = "player-controls player-remove"
+            playerRemoveButton.style.color = player.pattern.colourAt(0)
+            this.overlay.appendChild(playerRemoveButton)
+            playerRemoveButton.onmouseup = () => {
+                players.splice(players.indexOf(player), 1)
+                this.#recreatePlayerButtons()
+            }
+            
+            const playerNameTextarea = document.createElement("textarea")
+            playerNameTextarea.innerText = player.name
+            playerNameTextarea.rows = 1
+            playerNameTextarea.classList.add("player-name")
+            playerNameTextarea.style.background = player.pattern.cssGradient() + " text"
+            this.overlay.appendChild(playerNameTextarea)
+            playerNameTextarea.onkeydown = e => e.stopPropagation()
+            playerNameTextarea.onkeyup = e => {
+                e.stopPropagation()
+                if (e.key === "Enter") playerNameTextarea.blur()
+            }
+            playerNameTextarea.oninput = () => {
+                player.name = playerNameTextarea.value
+            }
 
-        const cfgText = CONFIG.UI.text
+            const playerLeftControlButton = document.createElement("button")
+            playerLeftControlButton.innerText = player.leftKey
+            playerLeftControlButton.className = "player-controls player-left-control"
+            playerLeftControlButton.style.background = player.pattern.cssGradient(true) + " text"
+            this.overlay.appendChild(playerLeftControlButton)
+            playerLeftControlButton.onmouseup = () => {
+                if (this.queuedPresses.length > 0) return
+                player.leftKey = null
+                this.queuedPresses.push({player: player, key: "left"})
+                this.#showFirstQueuedPress()
+            }
 
-        for (const [idx, player] of players.entries()) {
-            const y = 0.13+0.07*idx
-            const colour = player.pattern.linearGradient(this.ctx, 0, y, 1, y)
-
-            this.buttons.push(
-                new Button(this.ctx, "X", 0.1, y, 
-                    colour, cfgText.font.small, "left", "middle", 
-                    () => {
-                        players.splice(players.indexOf(player), 1)
-                        this.#recreatePlayerButtons()
-                    }),
-                new Button(this.ctx, player.name, 0.33, y, 
-                    colour, cfgText.font.medium, "center", "middle"),
-                new Button(this.ctx, player.leftKey ? player.leftKey : "", 0.64, y, 
-                    colour, cfgText.font.small, "right", "middle",
-                    () => {
-                        player.leftKey = null
-                        this.queuedPresses.push({player: player, key: "left"})
-                        this.#showFirstQueuedPress()
-                    }),
-                new Button(this.ctx, player.rightKey ? player.rightKey : "", 0.70, y, 
-                    colour, cfgText.font.small, "left", "middle",
-                    () => {
-                        player.rightKey = null
-                        this.queuedPresses.push({player: player, key: "right"})
-                        this.#showFirstQueuedPress()
-                    }),
-            )
+            const playerRightControlButton = document.createElement("button")
+            playerRightControlButton.innerText = player.rightKey
+            playerRightControlButton.className = "player-controls player-right-control"
+            playerRightControlButton.style.background = player.pattern.cssGradient(false) + " text"
+            this.overlay.appendChild(playerRightControlButton)
+            playerRightControlButton.onmouseup = () => {
+                if (this.queuedPresses.length > 0) return
+                player.rightKey = null
+                this.queuedPresses.push({player: player, key: "right"})
+                this.#showFirstQueuedPress()
+            }
         }
     }
 

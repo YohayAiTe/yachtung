@@ -7,7 +7,7 @@ class EndRound extends State {
     #lastAlive = null
 
     constructor(game) {
-        super(game)
+        super(game, "end-round")
 
         let topScore = 0
         for (const player of this.game.players) {
@@ -16,6 +16,21 @@ class EndRound extends State {
         }
 
         if ((this.game.players.length-1)*CONFIG.gameplay.round.scoring.endGameFactor <= topScore) return new EndScreen(game)
+
+        const cfgContinueKey = CONFIG.UI.controls.continueGameKeys[0]
+
+        const continueGameMessageSpan = document.createElement("span")
+        continueGameMessageSpan.innerText = `Press ${cfgContinueKey} to continue`
+        continueGameMessageSpan.classList.add("continue-message")
+        this.overlay.appendChild(continueGameMessageSpan)
+
+        if (this.#lastAlive) {
+            const roundWinnerSpan = document.createElement("span")
+            roundWinnerSpan.innerText = `${this.#lastAlive.name} won the round`
+            roundWinnerSpan.style.background = this.#lastAlive.pattern.cssGradient() + " text"
+            roundWinnerSpan.classList.add("round-winner")
+            this.overlay.appendChild(roundWinnerSpan)
+        }
     }
 
     /** @type {KeyHandler} */
@@ -23,27 +38,10 @@ class EndRound extends State {
         if (this.game.isContinueKeyEvent(event)) this.game.setState(PreRound)
     }
 
-    /** @type {MouseHandler} */
-    mouseHandler() {}
-
     render() {
         this.game.renderBorder()
         this.game.renderObstacles()
         this.game.renderPlayers()
         this.game.powerupManager.render()
-
-        const cfgText = CONFIG.UI.text
-        const cfgContinueKey = CONFIG.UI.controls.continueGameKeys[0]
-
-        this.ctx.textAlign = "center"
-        this.ctx.textBaseline = "middle"
-        this.ctx.fillStyle = cfgText.colour
-        this.ctx.font = cfgText.font.large
-        this.ctx.fillText(`Press ${cfgContinueKey} to continue`, 0.5, 0.5)
-        if (this.#lastAlive) {
-            this.ctx.fillStyle = this.#lastAlive.pattern.linearGradient(this.ctx, 0, 0.6, 1, 0.6)
-            this.ctx.font = cfgText.font.medium
-            this.ctx.fillText(`${this.#lastAlive.name} won the round`, 0.5, 0.6)
-        }
     }
 }

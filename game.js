@@ -1,10 +1,12 @@
 class Game {
     /**
      * @param {CanvasRenderingContext2D} ctx
+     * @param {HTMLDivElement} overlay 
      * @param {Scoreboard} scoreboard
      */
-    constructor(ctx, scoreboard) {
+    constructor(ctx, overlay, scoreboard) {
         this.ctx = ctx
+        this.overlay = overlay
         this.scoreboard = scoreboard
         this.powerupManager = new PowerupManager(this, this.#powerupFunction)
 
@@ -62,15 +64,6 @@ class Game {
      */
     isContinueKeyEvent(event) {
         return CONFIG.UI.controls.continueGameKeys.includes(event.code) && event.type === "keyup"
-    }
-
-    /**
-     * @param {MouseEvent} event 
-     */
-    mouseHandler(event) {
-        if (event.repeat) return
-        const transform = this.ctx.getTransform()
-        this.state.mouseHandler(event, event.pageX/transform.a, event.pageY/transform.d)
     }
 
     resizeHandler() { this.state.render(this) }

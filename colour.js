@@ -80,15 +80,22 @@ class Pattern {
 
     /**
      * 
+     * @param {Boolean} [reversed=false]
      * @returns {string}
      */
-    cssGradient() {
-        if (this.colours.length === 1) return this.colours[0].string()
+    cssGradient(reversed=false) {
+        if (this.colours.length === 1) {
+            const colour = this.colours[0].string()
+            return `linear-gradient(${colour}, ${colour})`
+        }
         
         let result = "linear-gradient(0.25turn"
-        for (const colour of this.colours) {
-            result += ", " + colour.string()
+        if (reversed) {
+            for (const colour of this.colours.slice().reverse()) result += ", " + colour.string()
+        } else {
+            for (const colour of this.colours) result += ", " + colour.string()
         }
+        
         return result + ")"
     }
 

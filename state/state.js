@@ -2,13 +2,20 @@ class State {
     /**
      * 
      * @param {Game} game 
+     * @param {string} overlayClassSuffix
      */
-    constructor(game) {
+    constructor(game, overlayClassSuffix) {
         this.game = game
+        this.game.overlay.innerHTML = ""
+        this.game.overlay.className = "state-"+overlayClassSuffix
     }
 
     get ctx() {
         return this.game.ctx
+    }
+
+    get overlay() {
+        return this.game.overlay
     }
 
     /**
@@ -16,12 +23,6 @@ class State {
      * @type {KeyHandler}
      */
     keyHandler() { console.error("calling keyHandler without override") }
-
-    /**
-     * @typedef {(event: MouseEvent, x: number, y: number) => void} MouseHandler
-     * @type {MouseHandler}
-     */
-    mouseHandler() { console.error("calling mouseHandler without override") }
 
     /**
      * 
