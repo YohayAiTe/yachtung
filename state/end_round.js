@@ -9,13 +9,16 @@ class EndRound extends State {
     constructor(game) {
         super(game, "end-round")
 
-        let topScore = 0
-        for (const player of this.game.players) {
-            if (player.isAlive) this.#lastAlive = player
-            if (player.score > topScore) topScore = player.score
-        }
+        for (const player of this.game.players) if (player.isAlive) this.#lastAlive = player
 
-        if ((this.game.players.length-1)*CONFIG.gameplay.round.scoring.endGameFactor <= topScore) return new EndScreen(game)
+        const cfgScoring = CONFIG.gameplay.round.scoring
+        /** @type {Player[]} */
+        const sortedPlayers = this.game.players.toSorted((p1,  p2) => p2.score - p1.score)
+        const topScore = sortedPlayers[0].score
+        const minEndGameScores = (this.game.players.length-1)*cfgScoring.endGameFactor
+        const topPlayersDifference = sortedPlayers[0].score - sortedPlayers[1].score
+        if (minEndGameScores <= topScore && 
+            topPlayersDifference >= cfgScoring.minPointsDifference) return new EndScreen(game)
 
         const cfgContinueKey = CONFIG.UI.controls.continueGameKeys[0]
 
